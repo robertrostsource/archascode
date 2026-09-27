@@ -1,0 +1,95 @@
+# Illustrative enterprise-mode BCA built only from public sources
+# (Rogers Corporation FY2025 Form 10-K). Not endorsed by Rogers Corporation.
+# Serves as the golden test for the BCA agent and the renderers.
+
+metadata:
+  id: BCA-ROGERS-ENT
+  title: Rogers Corporation - Enterprise Business Context (public-source illustration)
+  mode: enterprise
+  status: Draft
+  classification: Internal Use Only
+  customer: Illustration only
+  author: archascode BCA agent
+  date: "2026-09-25"
+  collaborators:
+    - {name: Maintainer, role: Security Architect, contribution: Domain classification review}
+
+value:
+  - {id: VAL-01, domain: AEF-LOC-0040, statement: Profitable growth in targeted engineered-materials markets, measure: Net sales growth and gross margin}
+  - {id: VAL-02, domain: AEF-LOC-0040, statement: Competitive advantage from proprietary materials technology}
+  - {id: VAL-03, domain: AEF-LOC-0041, statement: Safe workplaces and responsible environmental impact}
+
+problem:
+  statement: Growth and margin depend on protecting proprietary technology and keeping globally distributed operations running amid supply, trade, and cyber pressure.
+  current_state: Sales declined modestly in 2025; restructuring and a multi-year ERP replacement are underway; IT is reported as under constant attack.
+  desired_state: Secure, resilient operations that let the market-driven strategy and innovation pillar deliver profitable growth.
+  value_at_stake: [VAL-01, VAL-02]
+
+business_outcomes:
+  - {id: BRO1, name: Grow revenue in target markets, description: "Win and expand business in EV/HEV, ADAS, aerospace and defense, and renewable energy markets.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0006, AEF-LOC-0036], library_ref: BO-GROW-MARKETS, evidence: [{source: "10-K Item 7", reference: Company Overview and Strategy}], domas: [DOMA-01]}
+  - {id: BRO2, name: Protect proprietary technology, description: "Preserve the advantage created by R&D, trade secrets, and process know-how.", necessity: MUST, creates_value: [VAL-02, VAL-01], domains: [AEF-LOC-0003, AEF-LOC-0019], library_ref: BO-INNOVATION-IP, evidence: [{source: "10-K Item 1A", reference: Proprietary technology risk}], domas: [DOMA-02, DOMA-03]}
+  - {id: BRO3, name: Keep operations running through disruption, description: "Continue to produce, ship, and transact when sites or systems are disrupted.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0007, AEF-LOC-0016, AEF-LOC-0017], library_ref: BO-OPERATIONAL-RESILIENCE, evidence: [{source: "10-K Item 1A", reference: Facilities and IT disruption}], domas: [DOMA-04, DOMA-05]}
+  - {id: BRO4, name: Assure continuity of critical supply, description: "Sustain production despite sole or limited-source raw materials.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0038, AEF-LOC-0005], library_ref: BO-SUPPLY-CONTINUITY, evidence: [{source: "10-K Item 1A", reference: Supplier dependence}], domas: [DOMA-06]}
+  - {id: BRO5, name: Retain access to global markets, description: "Keep selling and operating across jurisdictions despite tariffs and export controls.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0006, AEF-LOC-0005], library_ref: BO-GLOBAL-MARKET-ACCESS, evidence: [{source: "10-K Item 1A", reference: International operations; U.S.-China trade}], domas: [DOMA-07]}
+  - {id: BRO6, name: Produce reliable financial records through ERP change, description: "Keep financial reporting accurate during the ERP replacement.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0016, AEF-LOC-0019], library_ref: BO-TRUSTED-REPORTING, evidence: [{source: "10-K Item 1A", reference: ERP implementation}], domas: [DOMA-08]}
+  - {id: BRO7, name: Everyone goes home safely, description: "Protect employee health and safety at every site.", necessity: MUST, creates_value: [VAL-03], domains: [AEF-LOC-0004, AEF-LOC-0007], library_ref: BO-SAFE-WORKPLACE, evidence: [{source: "10-K Item 1", reference: Human Capital}], domas: [DOMA-09]}
+
+domas:
+  - {id: DOMA-01, domain: AEF-LOC-0036, attributes: [Customer-Focused, Timely], necessity: MUST, supports: [BRO1]}
+  - {id: DOMA-02, domain: AEF-LOC-0003, attributes: [Confidential, Classified], necessity: MUST, supports: [BRO2]}
+  - {id: DOMA-03, domain: AEF-LOC-0004, attributes: [Aware, Vetted], necessity: SHOULD, supports: [BRO2]}
+  - {id: DOMA-04, domain: AEF-LOC-0016, attributes: [Available, Recoverable], necessity: MUST, supports: [BRO3]}
+  - {id: DOMA-05, domain: AEF-LOC-0007, attributes: [Crisis-Managed, Recoverable], necessity: MUST, supports: [BRO3]}
+  - {id: DOMA-06, domain: AEF-LOC-0038, attributes: [Vetted, Monitored], necessity: MUST, supports: [BRO4]}
+  - {id: DOMA-07, domain: AEF-LOC-0006, attributes: [Compliant, Legal], necessity: MUST, supports: [BRO5]}
+  - {id: DOMA-08, domain: AEF-LOC-0019, attributes: [Integrity-Assured, Auditable], necessity: MUST, supports: [BRO6, BRO2]}
+  - {id: DOMA-09, domain: AEF-LOC-0007, attributes: [Safe, Emergency-Managed], necessity: MUST, supports: [BRO7]}
+
+scope:
+  in:
+    - {statement: AES and EMS operating segments and shared corporate functions, domain: AEF-LOC-0001}
+  out:
+    - {statement: Other operating segment (non-core), rationale: Not strategic in the 10-K}
+
+domain_impact:
+  - {domain: AEF-LOC-0001, impact: high}
+  - {domain: AEF-LOC-0039, impact: high}
+  - {domain: AEF-LOC-0040, impact: high}
+  - {domain: AEF-LOC-0041, impact: medium}
+  - {domain: AEF-LOC-0006, impact: high, elements: [Circuit materials, Ceramic substrates, Elastomeric materials]}
+  - {domain: AEF-LOC-0002, impact: medium, elements: [Technical and engineering support]}
+  - {domain: AEF-LOC-0003, impact: high, elements: [Formulations, Process know-how, Customer design data]}
+  - {domain: AEF-LOC-0004, impact: high, elements: [Sales engineers, R&D staff, "About 3,000 employees"]}
+  - {domain: AEF-LOC-0005, impact: medium, elements: [Manufacturing, Procurement, Order-to-cash]}
+  - {domain: AEF-LOC-0007, impact: high, elements: [Sites in U.S., Germany, Belgium, Hungary, England, China, South Korea]}
+  - {domain: AEF-LOC-0015, impact: high}
+  - {domain: AEF-LOC-0016, impact: high, elements: [ERP (legacy and new)]}
+  - {domain: AEF-LOC-0017, impact: medium}
+  - {domain: AEF-LOC-0018, impact: medium}
+  - {domain: AEF-LOC-0019, impact: high}
+  - {domain: AEF-LOC-0042, impact: medium}
+  - {domain: AEF-LOC-0020, impact: medium}
+  - {domain: AEF-LOC-0021, impact: none, confirmed_empty: true}
+  - {domain: AEF-LOC-0031, impact: high}
+  - {domain: AEF-LOC-0036, impact: high, elements: ["About 2,800 OEM and component-supplier customers"]}
+  - {domain: AEF-LOC-0037, impact: low}
+  - {domain: AEF-LOC-0038, impact: high, elements: [Sole or limited-source raw material suppliers]}
+  - {domain: AEF-LOC-0026, impact: high, elements: [Actors seeking proprietary technology]}
+
+risks:
+  - {id: RSK-01, statement: Theft or disclosure of proprietary formulations erodes competitive advantage, threatens: [VAL-02], domain: AEF-LOC-0003, likelihood: Medium, impact: High, treatment: Mitigate, domas_at_risk: [DOMA-02], needs_security_input: true}
+  - {id: RSK-02, statement: Cyber or system disruption halts order processing and shipping, threatens: [VAL-01], domain: AEF-LOC-0016, likelihood: Medium, impact: High, treatment: Mitigate, domas_at_risk: [DOMA-04], needs_security_input: true}
+  - {id: RSK-03, statement: ERP transition weakens financial record integrity, threatens: [VAL-01], domain: AEF-LOC-0019, likelihood: Medium, impact: Medium, treatment: Mitigate, domas_at_risk: [DOMA-08]}
+  - {id: RSK-04, statement: Sole-source supplier failure or compromise stops production, threatens: [VAL-01], domain: AEF-LOC-0038, likelihood: Needs Validation, impact: High, treatment: Undecided, domas_at_risk: [DOMA-06]}
+
+decisions:
+  - {id: DEC-01, question: "Does protecting proprietary technology outrank operational availability where the two conflict?", owner: Needs Validation (executive sponsor), status: Open, adr_needed: true, related: [BRO2, BRO3]}
+  - {id: DEC-02, question: "Is Partners correctly rated low impact, or are outsourced services in scope?", owner: Needs Validation, status: Open, related: [AEF-LOC-0037]}
+
+sda_trigger:
+  recommended: true
+  reasons: [high_value_at_risk]
+  notes: RSK-01 and RSK-02 are High impact against MUST-level outcomes.
+
+references:
+  - {title: Rogers Corporation Form 10-K FY2025, url: "https://www.sec.gov/Archives/edgar/data/84748/000008474826000007/rog-20251231.htm", type: SEC filing}

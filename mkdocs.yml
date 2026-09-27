@@ -1,5 +1,5 @@
 site_name: Architecture as Code
-site_description: AI-assisted cybersecurity architecture artifacts - SBARs, ADRs and design documents
+site_description: AI-assisted cybersecurity architecture artifacts - Business Contextual Architecture, SBARs, ADRs and design documents
 site_url: https://robertrostsource.github.io/archascode/
 repo_url: https://github.com/robertrostsource/archascode
 repo_name: robertrostsource/archascode
@@ -37,6 +37,17 @@ markdown_extensions:
   - tables
   - toc:
       permalink: true
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+extra_css:
+  - stylesheets/extra.css
 
 # No "nav:" section on purpose. MkDocs builds the menu from the docs/ folder,
-# so a new SBAR appears on the site as soon as its file lands in docs/sbar/.
+# so a new SBAR or BCA appears on the site as soon as its file lands in docs/.

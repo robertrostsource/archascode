@@ -1,0 +1,98 @@
+# archascode/library/attributes.yaml
+# ---------------------------------------------------------------------------
+# ATTRIBUTION
+#   Business attributes concept: SABSA(R), (c) The SABSA Institute.
+#   Attribute set: AEF(TM) Reference Architecture Attributes, The Agile
+#   Security System(TM), (c) Archistry / Andrew S. Townley. Used with
+#   attribution; no claim of ownership is made.
+#   Definitions below are paraphrased in the maintainer's own words.
+#   Category grouping follows the SABSA attribute taxonomy style and is the
+#   maintainer's own assignment.
+# ---------------------------------------------------------------------------
+# USAGE
+#   Attributes qualify HOW a domain must behave to deliver a business
+#   outcome. Pair them with a domain to form a DOMA, e.g.
+#     Enterprise::Technology::Platforms (Available)
+#   Attributes are never business outcomes on their own.
+# ---------------------------------------------------------------------------
+
+version: 0.1.0
+
+categories:
+  business_strategy: Qualities that express competitive and financial intent
+  user:              Qualities experienced by the people using the domain
+  management:        Qualities of ownership, oversight, and administration
+  operational:       Qualities of day-to-day delivery and continuity
+  risk_management:   Qualities that keep uncertainty within appetite
+  legal_regulatory:  Qualities required by law, contract, or ethics
+  technical_strategy: Qualities that let the domain grow and interoperate
+
+attributes:
+  # --- Business strategy -------------------------------------------------------
+  - {id: Competitive,  category: business_strategy, definition: "Committed to outperforming others in its market and invests to do so."}
+  - {id: Cost-Effective, category: business_strategy, definition: "Delivers benefit in proportion to what the business is willing to pay for it."}
+  - {id: Customer-Focused, category: business_strategy, definition: "Shapes products and services around customer needs to build lasting, high-value relationships."}
+  - {id: Innovative,   category: business_strategy, definition: "Turns new ideas into action that advances organizational goals."}
+  - {id: Profitable,   category: business_strategy, definition: "Produces a financial gain for the organization."}
+  - {id: Reputable,    category: business_strategy, definition: "Seen by markets and communities as respected and of good character."}
+  - {id: Solvent,      category: business_strategy, definition: "Assets exceed liabilities, and debts can be paid when due."}
+  - {id: Sustainable,  category: business_strategy, definition: "Operates at required service levels without depleting natural resources."}
+  - {id: Environmentally-Responsible, category: business_strategy, definition: "Actively reduces the environmental impact of its activities."}
+
+  # --- User ------------------------------------------------------------------------
+  - {id: Aware,        category: user, definition: "People understand the organization's goals and how they contribute to them."}
+  - {id: Educated,     category: user, definition: "Elements have received the instruction or guidance needed on a given subject."}
+  - {id: Experienced,  category: user, definition: "Elements show the knowledge and skill needed to deliver domain objectives."}
+  - {id: Qualified,    category: user, definition: "Elements are formally tested and recognized as able to perform a function."}
+  - {id: Usable,       category: user, definition: "Elements are fit for their intended purpose."}
+  - {id: Timely,       category: user, definition: "Elements are available or occur when they are useful."}
+
+  # --- Management --------------------------------------------------------------------
+  - {id: Governed,     category: management, definition: "Clear, monitored accountability exists for every element, keeping it aligned and protected."}
+  - {id: Owned,        category: management, definition: "Every element has a designated party accountable for its use and its risks."}
+  - {id: Managed,      category: management, definition: "Elements are administered and controlled in support of objectives."}
+  - {id: Measured,     category: management, definition: "Performance is compared with targets and reported so corrections can be made."}
+  - {id: Monitored,    category: management, definition: "Elements are observed and checked for state, progress, or quality."}
+  - {id: Reported,     category: management, definition: "Element status reaches interested parties on the owner's schedule."}
+  - {id: Documented,   category: management, definition: "Elements are formally identified and described."}
+  - {id: Resourced,    category: management, definition: "Money, materials, staff, and assets are provided to meet objectives."}
+  - {id: Effective,    category: management, definition: "Elements actually achieve the intended objectives."}
+  - {id: Efficient,    category: management, definition: "Elements achieve objectives with minimal wasted effort or expense."}
+  - {id: Adaptable,    category: management, definition: "People, processes, models, and services adjust readily to change."}
+
+  # --- Operational ---------------------------------------------------------------------
+  - {id: Available,    category: operational, definition: "Elements can be used when needed to deliver objectives."}
+  - {id: Recoverable,  category: operational, definition: "Elements restore service within agreed targets after an interruption."}
+  - {id: Maintained,   category: operational, definition: "Elements are kept in good working order."}
+  - {id: Change-Managed, category: operational, definition: "Changes are evaluated and approved before implementation, limiting unintended effects."}
+  - {id: Configuration-Managed, category: operational, definition: "Actual characteristics stay consistent with requirements and design throughout life."}
+  - {id: Incident-Managed, category: operational, definition: "A followed, monitored process restores normal service quickly after unplanned failure."}
+  - {id: Crisis-Managed, category: operational, definition: "Can detect, respond to, recover from, and learn from severe trouble, including allegations and criticism."}
+  - {id: Emergency-Managed, category: operational, definition: "Can respond to and recover from sudden events that threaten life or property."}
+  - {id: Safe,         category: operational, definition: "Elements are unlikely to be harmed or lost."}
+
+  # --- Risk management -------------------------------------------------------------------
+  - {id: Risk-Managed, category: risk_management, definition: "Uncertainty is assessed, monitored, and controlled to the owner's acceptable level."}
+  - {id: Risk-Aware,   category: risk_management, definition: "Elements understand and own the risks they face in pursuing objectives."}
+  - {id: Threat-Managed, category: risk_management, definition: "Threats are identified, catalogued, evaluated, and tracked continuously."}
+  - {id: Vulnerability-Managed, category: risk_management, definition: "Weaknesses are identified, catalogued, evaluated, and tracked continuously."}
+  - {id: Assured,      category: risk_management, definition: "Controls supporting risk decisions are validated as present and working."}
+  - {id: Access-Controlled, category: risk_management, definition: "Only access explicitly authorized by the domain owner is permitted."}
+  - {id: Identified,   category: risk_management, definition: "Every interacting entity is uniquely and unambiguously identified."}
+  - {id: Authenticated, category: risk_management, definition: "Claimed identities are verified before they are trusted."}
+  - {id: Authorized,   category: risk_management, definition: "Each identity has explicit permitted interactions, enforced every time."}
+  - {id: Vetted,       category: risk_management, definition: "Identity, credentials, and suitability are verified before participation."}
+  - {id: Classified,   category: risk_management, definition: "Elements are grouped into meaningful categories, including by risk exposure and intended use."}
+  - {id: Confidential, category: risk_management, definition: "Unauthorized disclosure of information is prevented."}
+  - {id: Integrity-Assured, category: risk_management, definition: "Elements are protected from unauthorized change or removal."}
+  - {id: Auditable,    category: risk_management, definition: "Actions are recorded completely and in a way that cannot be denied."}
+  - {id: Duty-Segregated, category: risk_management, definition: "Sensitive tasks are split across people, and the separation is verified."}
+
+  # --- Legal and regulatory ----------------------------------------------------------------
+  - {id: Compliant,    category: legal_regulatory, definition: "Meets applicable laws, regulations, contracts, policies, and mandatory standards."}
+  - {id: Legal,        category: legal_regulatory, definition: "Actions, existence, and content are permitted by applicable law."}
+  - {id: Ethical,      category: legal_regulatory, definition: "Operates in line with the organization's definition of right, without harming people or the environment."}
+
+  # --- Technical strategy --------------------------------------------------------------------
+  - {id: Scalable,     category: technical_strategy, definition: "Absorbs added demand at the intended cost and response time."}
+  - {id: Interoperable, category: technical_strategy, definition: "Works with similar elements in other domains, now and in future."}
