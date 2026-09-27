@@ -103,6 +103,7 @@ domain_impact:
     impact: low
     elements:
       - {name: Contractor firms, source: "Conceptual FR2, UC02"}
+      - {name: Managed SOC provider, source: "Live demo"}
   - {domain: AEF-LOC-0038, impact: none}     # GAP - no human confirmation
   - domain: AEF-LOC-0026
     impact: high
@@ -116,14 +117,14 @@ risks:
   - {id: RSK-04, rank: 4, statement: "An access-broker outage stops remote work for all users", threatens: [VAL-01], domain: AEF-LOC-0002, elements: ["Remote access service (Gold tier, 99.9%)"], likelihood: Low, impact: High, treatment: Mitigate, strategies: [STR-03]}
   - {id: RSK-05, rank: 5, statement: "Migration slips past CorvusGate end of support", threatens: [VAL-03], domain: AEF-LOC-0018, elements: [CorvusGate full-tunnel VPN], likelihood: Medium, impact: Medium, treatment: Mitigate, strategies: [STR-05]}
   - {id: RSK-06, rank: 6, statement: "Sessions from hostile hotel or travel networks are intercepted or hijacked", threatens: [VAL-02], domain: AEF-LOC-0042, elements: ["Remote connections from homes, hotels, approved countries"], likelihood: Medium, impact: Medium, treatment: Mitigate, strategies: [STR-01, STR-04]}
-
+  - {id: RSK-07, rank: 7, statement: "A compromised managed SOC provider is used to reach NovaCorp sessions and logs", threatens: [VAL-02], domain: AEF-LOC-0037, elements: [Managed SOC provider], likelihood: Low, impact: High, treatment: Mitigate, strategies: [STR-06]}
 strategies:
   - {id: STR-01, library_ref: STR-LEAST-PRIVILEGE-ACCESS, name: Grant only the access each identity needs, statement: "Verify every user and authorize access application by application, never to the network.", mitigates: [RSK-01, RSK-03, RSK-06], domains: [AEF-LOC-0004, AEF-LOC-0016], attributes: [Identified, Authenticated, Authorized, Access-Controlled, Monitored]}
   - {id: STR-02, library_ref: STR-DEVICE-TRUST, name: Trust only healthy devices, statement: "Check device posture before and during every session, including contractor-owned devices.", mitigates: [RSK-02], domains: [AEF-LOC-0017], attributes: [Configuration-Managed, Vulnerability-Managed, Access-Controlled, Monitored]}
   - {id: STR-03, library_ref: STR-RESILIENT-SERVICE, name: "Deliver a resilient, usable service", statement: "Design the access service for Gold tier availability and a low-friction user experience.", mitigates: [RSK-04], domains: [AEF-LOC-0002], attributes: [Available, Scalable, Recoverable, Usable, Customer-Focused]}
   - {id: STR-04, library_ref: STR-THREAT-DETECTION, name: Detect and respond to session abuse, statement: "Monitor sessions for theft and misuse and respond before an attacker reaches data.", mitigates: [RSK-01, RSK-06], domains: [AEF-LOC-0016, AEF-LOC-0042], attributes: [Threat-Managed, Monitored, Incident-Managed]}
   - {id: STR-05, library_ref: STR-GOVERNED-CHANGE, name: Retire the VPN under control, statement: "Run the migration with owned milestones, measured progress, and preserved controls.", mitigates: [RSK-05], domains: [AEF-LOC-0018], attributes: [Change-Managed, Owned, Measured, Governed]}
-
+  - {id: STR-06, library_ref: STR-THIRD-PARTY-ASSURANCE, name: Assure the SOC partner, statement: "Vet, contract, and monitor the managed SOC provider in proportion to its access.", mitigates: [RSK-07], domains: [AEF-LOC-0037], attributes: [Vetted, Monitored, Assured, Risk-Managed]}
 decisions:
   - {id: DEC-01, question: "Is the cloud access-broker provider really outside Suppliers? It will carry every remote session.", owner: Director of Infrastructure, status: Open, related: [AEF-LOC-0038]}
   - {id: DEC-02, question: "Do joiner, mover, leaver and access-request processes change? Processes is marked not impacted.", owner: IAM owner, status: Open, related: [AEF-LOC-0005]}
