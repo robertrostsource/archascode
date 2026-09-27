@@ -1,0 +1,95 @@
+# FICTITIOUS DEMO CONTENT - COSAC 2026. NovaCorp, Project WAYFINDER, and all
+# products are invented. Solution-mode BCA behind the approved WAYFINDER
+# Conceptual Architecture. Demo A: three domains are marked "none" with no
+# human confirmation, so the validator warns and the worksheet shows GAPs.
+
+metadata:
+  id: BCA-NOVACORP-WAYFINDER
+  title: Project WAYFINDER - Remote Access Business Context (fictitious)
+  mode: solution
+  status: Approved_by_ARC
+  classification: Confidential
+  customer: Director of Infrastructure
+  project_ref: PRJ-2026-114
+  author: Enterprise Security Architect
+  date: "2026-09-18"
+  collaborators:
+    - {name: Director of Infrastructure, role: Business Owner}
+    - {name: Enterprise Security Architect, role: Security Architect, contribution: Domain impact and DOMAs}
+
+value:
+  - {id: VAL-01, domain: AEF-LOC-0040, statement: "Productive, anywhere access for 4,200 remote employees, contractors, and travelers", measure: "90% user satisfaction; 99.9% availability"}
+  - {id: VAL-02, domain: AEF-LOC-0040, statement: "Protect confidential ERP and engineering information from unauthorized disclosure", measure: "0 disclosure incidents"}
+  - {id: VAL-03, domain: AEF-LOC-0040, statement: "Avoid cost and audit exposure from an unsupported VPN and excessive network access"}
+
+problem:
+  statement: "Remote users get network-level access far beyond their role, the finding is open with Internal Audit, and the VPN platform reaches end of support in March 2027."
+  current_state: "4,200 users on a full-tunnel VPN reach 14 internal subnets regardless of role; contractors on personal devices get the same access as employees (IA-2026-07)."
+  desired_state: "Each user reaches only the applications they are authorized for, from any approved location, with the VPN retired before end of support."
+  value_at_stake: [VAL-01, VAL-02, VAL-03]
+
+business_outcomes:
+  - {id: BRO1, name: Least-privilege remote access, description: "Users and contractors reach only the applications they are authorized for, closing audit finding IA-2026-07.", necessity: MUST, creates_value: [VAL-02, VAL-03], domains: [AEF-LOC-0004, AEF-LOC-0016], evidence: [{source: Internal Audit, reference: IA-2026-07}], domas: [DOMA-01, DOMA-02, DOMA-04]}
+  - {id: BRO2, name: Retire the legacy VPN on time, description: "Move all remote access off CorvusGate before end of support on 2027-03-31.", necessity: MUST, creates_value: [VAL-03], domains: [AEF-LOC-0002, AEF-LOC-0018], evidence: [{source: Project charter, reference: PRJ-2026-114}], domas: [DOMA-03, DOMA-05]}
+  - {id: BRO3, name: Work productively from anywhere, description: "Employees, contractors, and travelers open assigned applications from any approved location without friction.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0002, AEF-LOC-0004], evidence: [{source: Conceptual Architecture, reference: "FR4, UC01-UC03"}], domas: [DOMA-03, DOMA-06]}
+
+domas:
+  - {id: DOMA-01, domain: AEF-LOC-0004, attributes: [Authenticated, Authorized, Vetted], necessity: MUST, supports: [BRO1]}
+  - {id: DOMA-02, domain: AEF-LOC-0016, attributes: [Access-Controlled, Monitored], necessity: MUST, supports: [BRO1]}
+  - {id: DOMA-03, domain: AEF-LOC-0002, attributes: [Available, Scalable, Customer-Focused], necessity: MUST, supports: [BRO2, BRO3]}
+  - {id: DOMA-04, domain: AEF-LOC-0003, attributes: [Confidential, Classified], necessity: MUST, supports: [BRO1]}
+  - {id: DOMA-05, domain: AEF-LOC-0018, attributes: [Access-Controlled, Change-Managed], necessity: MUST, supports: [BRO2]}
+  - {id: DOMA-06, domain: AEF-LOC-0017, attributes: [Access-Controlled, Vulnerability-Managed], necessity: MUST, supports: [BRO3]}
+
+scope:
+  in:
+    - {statement: "Remote access for employees and contractors to 40 private web applications", domain: AEF-LOC-0002}
+    - {statement: "Identity, device, and access-policy integration", domain: AEF-LOC-0004}
+    - {statement: "Security monitoring of remote access", domain: AEF-LOC-0016}
+  out:
+    - {statement: "OT remote access to manufacturing tooling", rationale: "Separate OT program"}
+    - {statement: "Modernization of legacy applications", rationale: "Application owners' roadmaps"}
+
+domain_impact:
+  - {domain: AEF-LOC-0001, impact: high}
+  - {domain: AEF-LOC-0039, impact: high}
+  - {domain: AEF-LOC-0040, impact: high}
+  - {domain: AEF-LOC-0041, impact: none, confirmed_empty: true}
+  - {domain: AEF-LOC-0006, impact: none, confirmed_empty: true}
+  - {domain: AEF-LOC-0002, impact: high, elements: [Remote access service, Self-service portal]}
+  - {domain: AEF-LOC-0003, impact: high, elements: [ERP data, Engineering data]}
+  - {domain: AEF-LOC-0004, impact: high, elements: [Employees, Contractors, Travelers]}
+  - {domain: AEF-LOC-0005, impact: none}     # GAP - no human confirmation
+  - {domain: AEF-LOC-0007, impact: none, confirmed_empty: true}
+  - {domain: AEF-LOC-0015, impact: high}
+  - {domain: AEF-LOC-0016, impact: high, elements: [40 private web applications]}
+  - {domain: AEF-LOC-0017, impact: medium, elements: [Managed and personal devices]}
+  - {domain: AEF-LOC-0018, impact: high, elements: [CorvusGate VPN, Access broker]}
+  - {domain: AEF-LOC-0019, impact: none}     # GAP - no human confirmation
+  - {domain: AEF-LOC-0042, impact: high}
+  - {domain: AEF-LOC-0020, impact: medium}
+  - {domain: AEF-LOC-0021, impact: none, confirmed_empty: true}
+  - {domain: AEF-LOC-0031, impact: medium}
+  - {domain: AEF-LOC-0036, impact: none, confirmed_empty: true}
+  - {domain: AEF-LOC-0037, impact: low}
+  - {domain: AEF-LOC-0038, impact: none}     # GAP - no human confirmation
+  - {domain: AEF-LOC-0026, impact: high, elements: [Credential and session thieves]}
+
+risks:
+  - {id: RSK-01, statement: "A stolen contractor session exposes confidential ERP or engineering data", threatens: [VAL-02], domain: AEF-LOC-0004, likelihood: Medium, impact: High, treatment: Mitigate, domas_at_risk: [DOMA-01, DOMA-04], needs_security_input: true}
+  - {id: RSK-02, statement: "An access-broker outage stops remote work for all users", threatens: [VAL-01], domain: AEF-LOC-0002, likelihood: Low, impact: High, treatment: Mitigate, domas_at_risk: [DOMA-03]}
+  - {id: RSK-03, statement: "Migration slips past VPN end of support", threatens: [VAL-03], domain: AEF-LOC-0018, likelihood: Medium, impact: Medium, treatment: Mitigate, domas_at_risk: [DOMA-05]}
+
+decisions:
+  - {id: DEC-01, question: "Is the cloud access-broker provider really outside Suppliers? It will carry every remote session.", owner: Director of Infrastructure, status: Open, related: [AEF-LOC-0038]}
+  - {id: DEC-02, question: "Do joiner, mover, leaver and access-request processes change? Processes is marked not impacted.", owner: IAM owner, status: Open, related: [AEF-LOC-0005]}
+  - {id: DEC-03, question: "Do session and access logs create new data stores with retention needs? Data is marked not impacted.", owner: Security Operations, status: Open, related: [AEF-LOC-0019]}
+
+sda_trigger:
+  recommended: true
+  reasons: [high_value_at_risk]
+  notes: "RSK-01 is High impact against a MUST outcome. Three domains are marked not impacted without a human decision."
+
+references:
+  - {title: "WAYFINDER Conceptual Architecture v1.0 (approved)"}
+  - {title: "Internal Audit finding IA-2026-07"}

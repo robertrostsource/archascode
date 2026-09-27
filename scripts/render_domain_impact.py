@@ -79,7 +79,7 @@ def render(model, edges="none"):
         if did in attrs:
             parts.append(f"<i>({', '.join(attrs[did])})</i>")
         if level(did) == "gap":
-            parts.append("<b>GAP: not assessed</b>")
+            parts.append("<b>GAP: not assessed</b>" if did not in impact else "<b>GAP: unconfirmed</b>")
         return "<br/>".join(parts).replace('"', "'")
 
     out = []

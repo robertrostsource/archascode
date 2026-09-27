@@ -18,7 +18,8 @@ def load(p):
 def main(model_path):
     model = load(model_path)
     schema = json.load(open(ROOT / "schemas/bca_model.schema.json", encoding="utf-8"))
-    domains = {d["id"] for d in load(ROOT / "library/taxonomy/domains.yaml")["domains"]}
+    dom_names = {d["id"]: d["name"] for d in load(ROOT / "library/taxonomy/domains.yaml")["domains"]}
+    domains = set(dom_names)
     attributes = {a["id"] for a in load(ROOT / "library/attributes.yaml")["attributes"]}
     outcomes_lib = {o["id"] for o in load(ROOT / "library/business_outcomes.yaml")["outcomes"]}
 
@@ -64,10 +65,10 @@ def main(model_path):
     covered = {i["domain"] for i in model["domain_impact"]}
     for i in model["domain_impact"]: dom(i["domain"], "domain_impact")
     for missing in sorted(domains - covered):
-        warnings.append(f"domain_impact: {missing} not assessed (absence is a decision)")
+        warnings.append(f"GAP {dom_names[missing]} ({missing}): not assessed. Absence is a decision.")
     for i in model["domain_impact"]:
         if i["impact"] == "none" and not i.get("confirmed_empty"):
-            warnings.append(f"domain_impact: {i['domain']} marked none but not human-confirmed")
+            warnings.append(f"GAP {dom_names[i['domain']]} ({i['domain']}): marked not impacted, but no human confirmed it.")
 
     if not model["scope"]["out"]:
         errors.append("scope: no out-of-scope statements")
