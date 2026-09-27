@@ -1,95 +1,125 @@
-# Demo Runbook — Architecture as Code: Three Additions
+# Demo Runbook — Architecture as Code: Type Three Additions
 
 > **FICTITIOUS DEMO CONTENT.** NovaCorp, Project WAYFINDER, and all products are invented.
-> **Time:** about 3 minutes. **Story:** add a managed SOC partner in three additions (element, risk, strategy), and watch the guardrails and the page respond to each one.
+> **Time:** about 4 minutes. **Story:** type three additions into the model (element, risk, strategy) and watch the guardrails and the page respond.
 
 ---
 
-## Before the session (5 minutes)
+## Before the session
 
-1. In the VS Code terminal (**Terminal → New Terminal**):
-   ```bash
-   cd ~/Documents/archascode
-   git pull
-   source .venv/bin/activate
-   python scripts/demo_bca.py reset
-   ```
-   The last line ends with **0 error(s), 3 warning(s)**.
-2. Start the live preview and leave it running:
-   ```bash
-   mkdocs serve
-   ```
-3. In the browser, open **http://127.0.0.1:8000/archascode/bca/novacorp-wayfinder/**
-   The address must include **/archascode/**.
-4. Open a **second terminal** (click **+** in the terminal panel), then run `source .venv/bin/activate`.
-5. In VS Code, open `bca/engagements/novacorp/wayfinder/model.yaml`, so the audience sees each addition appear.
+In VS Code, choose **Terminal → New Terminal**, then type:
 
-**Backups:** the fallback image on local disk, and the published site in another tab:
-robertrostsource.github.io/archascode/bca/novacorp-wayfinder/
+```
+git pull
+source .venv/bin/activate
+mkdocs serve
+```
+
+Open in the browser: **http://127.0.0.1:8000/archascode/bca/novacorp-wayfinder/**
+
+Open a **second terminal** (click **+** in the terminal panel) and type:
+
+```
+source .venv/bin/activate
+```
+
+Open the file `bca/engagements/novacorp/wayfinder/model.yaml`.
 
 ---
 
-## Live: three additions (all commands in the second terminal)
+## Addition 1: the element
 
-### Addition 1: the element
+Press **Cmd+F** and search for `Contractor firms`. At the end of that line, press **Enter** and type:
 
-```bash
-python scripts/demo_bca.py 1
+```yaml
+      - Managed SOC provider
 ```
 
-- **You see:** "Managed SOC provider" appears in the Partners block of `model.yaml`. The result is **0 errors, 3 warnings**.
-- **Say:** "Domains hold the organization's own elements. We just added a partner."
+(The dash lines up with the dash on the line above.) Save with **Cmd+S**.
 
-### Addition 2: the risk to value
+**Say:** "Domains hold the organization's own elements. We just added a partner."
 
-```bash
-python scripts/demo_bca.py 2
+---
+
+## Addition 2: the risk
+
+Search for `RSK-06`. At the end of that line, press **Enter** and type:
+
+```yaml
+  - id: RSK-07
+    statement: Compromised SOC partner reaches NovaCorp data
+    threatens: [VAL-02]
+    domain: AEF-LOC-0037
+    treatment: Mitigate
+    strategies: [STR-06]
 ```
 
-- **You see:** RSK-07 appears under `risks:`. The validator reports **ERROR RSK-07: unknown strategy STR-06**.
-- **Say:** "A risk without a mitigation strategy doesn't get in."
+Save with **Cmd+S**. In the second terminal, type:
 
-### Addition 3: the strategy and its attributes
-
-```bash
-python scripts/demo_bca.py 3
+```
+python scripts/validate_bca.py bca/engagements/novacorp/wayfinder/model.yaml
 ```
 
-- **You see:** STR-06 appears under `strategies:`. The result is **0 errors, 3 warnings**.
-- **Say:** "The three gaps stay. Hold on to them; the next two demos come back to them."
+Result: **ERROR RSK-07: unknown strategy STR-06**
 
-### Show the page
+**Say:** "A risk without a mitigation strategy doesn't get in."
 
-Switch to the browser and refresh (**Cmd+Shift+R**):
+---
+
+## Addition 3: the strategy
+
+Search for `STR-05`. At the end of that line, press **Enter** and type:
+
+```yaml
+  - id: STR-06
+    statement: Vet and monitor the SOC partner
+    mitigates: [RSK-07]
+    domains: [AEF-LOC-0037]
+    attributes: [Vetted, Monitored, Assured]
+```
+
+Save with **Cmd+S**. Run the validator again (press the **Up arrow**, then **Enter**).
+
+Result: **0 errors, 3 warnings**
+
+**Say:** "The three gaps stay. Hold on to them; the next two demos come back to them."
+
+---
+
+## Show the page
+
+Refresh the browser (**Cmd+Shift+R**) and scroll through:
 
 - **4.0 Worksheet:** the Partners box lists *Managed SOC provider*.
 - **5.1 Top Risks:** RSK-07.
-- **5.2 Strategies:** STR-06, with *Vetted, Monitored, Assured, Risk-Managed*.
+- **5.2 Strategies:** STR-06 with *Vetted, Monitored, Assured*.
 - **5.3 Attributes by Domain:** Partners now shows those attributes. Nobody typed them there.
 
-**Say:** "The attributes abstract the strategy, and they become the NFRs of the Conceptual Architecture. Three additions, and the whole chain stays consistent."
+**Say:** "I wrote the model; everything else was generated. The attributes become the NFRs of the Conceptual Architecture."
 
-### Reset for the next run
+---
 
-```bash
-python scripts/demo_bca.py reset
+## Reset for the next run
+
+In the second terminal:
+
+```
+git restore bca/engagements/novacorp/wayfinder/model.yaml
 ```
 
 ---
+
+## Typing rules
+
+- Indent with **spaces**, never Tab. Addition 1 starts with 6 spaces; Additions 2 and 3 start with 2 spaces before the dash and 4 spaces on the lines below it.
+- A red squiggle in VS Code means the indentation is off. Line it up with the entries above it.
 
 ## If something goes wrong
 
 | Symptom | Fix |
 |---|---|
 | Page shows "404" or is blank | Use the full address, including `/archascode/`. |
-| Page does not change | Press **Cmd+Shift+R**. If it still has not changed, press **Ctrl+C** in the preview terminal and run `mkdocs serve` again. |
-| `command not found` or `No module named yaml` | Run `source .venv/bin/activate`. |
-| `No such file or directory` | Run `cd ~/Documents/archascode`. |
-| "Partners block not in its starting form" | Run `python scripts/demo_bca.py reset`, then start again at Addition 1. |
-| Anything else on stage | Switch to the fallback image or the published site and keep talking. |
-
----
-
-## Chain to narrate
-
-`Value ← Risk (lands on elements in a domain) ← Mitigation strategy → Attributes → Conceptual NFRs`
+| Page does not change | Check the file is saved, then press **Cmd+Shift+R**. |
+| `command not found` | Run `source .venv/bin/activate`. |
+| Schema or YAML error after typing | Check the indentation against the entries above. |
+| Anything else on stage | Run the reset command, or switch to the published site and keep talking. |
