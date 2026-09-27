@@ -12,6 +12,7 @@ Visual conventions
   Fill   gold = physical domain, blue = logical domain (Townley convention)
   Border thickness/color = impact (high / medium / low); dashed grey = none
   Dashed red border = GAP: domain not assessed, or 'none' without human confirmation
+  Bullets inside a domain = the organization's elements (up to 5; full list in the page table)
   Italic text under a domain = DOMA attributes from the model
   Edges = optional provider -> consumer relationships (--edges impacted|all); off by default
           so the worksheet reads as a heat map, like the PowerPoint original
@@ -38,6 +39,9 @@ IMPACT = {
     "none":   "stroke:#AAB7B8,stroke-width:1px,stroke-dasharray:4 3,opacity:0.6",
     "gap":    "stroke:#C0392B,stroke-width:3px,stroke-dasharray:6 4",
 }
+
+
+MAX_ELEMENTS = 5  # the full list is in the page's detail table
 
 
 def nid(domain_id):
@@ -76,11 +80,18 @@ def render(model, edges="none"):
             parts = [f"<b>{d['name']}</b>"]  # IDs appear in the detail table
         else:
             parts = [f"<b>{d['name']}</b>", f"<small>{did}</small>"]
+        if not container:
+            els = [e["name"] if isinstance(e, dict) else str(e)
+                   for e in impact.get(did, {}).get("elements", [])]
+            shown = els[:MAX_ELEMENTS]
+            if len(els) > MAX_ELEMENTS:
+                shown.append(f"+{len(els) - MAX_ELEMENTS} more")
+            parts += [f"• {e}" for e in shown]
         if did in attrs:
             parts.append(f"<i>({', '.join(attrs[did])})</i>")
         if level(did) == "gap":
             parts.append("<b>GAP: not assessed</b>" if did not in impact else "<b>GAP: unconfirmed</b>")
-        return "<br/>".join(parts).replace('"', "'")
+        return "<br/>".join(parts).replace('"', "'").replace("&", "#amp;")
 
     out = []
     title = model["metadata"]["title"]

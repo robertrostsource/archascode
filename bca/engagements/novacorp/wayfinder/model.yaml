@@ -53,27 +53,69 @@ scope:
 domain_impact:
   - {domain: AEF-LOC-0001, impact: high}
   - {domain: AEF-LOC-0039, impact: high}
-  - {domain: AEF-LOC-0040, impact: high}
+  - domain: AEF-LOC-0040
+    impact: high
+    elements:
+      - {name: "CorvusGate VPN end of support (2027-03-31)", source: "Conceptual 1.0"}
+      - {name: "Audit finding IA-2026-07", source: "Conceptual 3.0"}
+      - {name: "License and support cost", source: "Conceptual NFR10-NFR11"}
   - {domain: AEF-LOC-0041, impact: none, confirmed_empty: true}
   - {domain: AEF-LOC-0006, impact: none, confirmed_empty: true}
-  - {domain: AEF-LOC-0002, impact: high, elements: [Remote access service, Self-service portal]}
-  - {domain: AEF-LOC-0003, impact: high, elements: [ERP data, Engineering data]}
-  - {domain: AEF-LOC-0004, impact: high, elements: [Employees, Contractors, Travelers]}
+  - domain: AEF-LOC-0002
+    impact: high
+    elements:
+      - {name: "Remote access service (Gold tier, 99.9%)", source: "Conceptual 7.0"}
+      - {name: Self-service access portal, source: "Conceptual FR3"}
+  - domain: AEF-LOC-0003
+    impact: high
+    elements:
+      - {name: ERP data (Confidential), source: "Conceptual NFR5"}
+      - {name: Engineering data (Confidential), source: "Conceptual NFR5"}
+  - domain: AEF-LOC-0004
+    impact: high
+    elements:
+      - {name: "4,200 remote employees", source: "Conceptual 3.0"}
+      - {name: Contractors on personal devices, source: "Conceptual 3.0"}
+      - {name: Travelers, source: "Conceptual FR4"}
+      - {name: "Network Ops, SecOps, IAM teams", source: "Conceptual 9.0"}
   - {domain: AEF-LOC-0005, impact: none}     # GAP - no human confirmation
   - {domain: AEF-LOC-0007, impact: none, confirmed_empty: true}
   - {domain: AEF-LOC-0015, impact: high}
-  - {domain: AEF-LOC-0016, impact: high, elements: [40 private web applications]}
-  - {domain: AEF-LOC-0017, impact: medium, elements: [Managed and personal devices]}
-  - {domain: AEF-LOC-0018, impact: high, elements: [CorvusGate VPN, Access broker]}
+  - domain: AEF-LOC-0016
+    impact: high
+    elements:
+      - {name: 40 private web applications, source: "Conceptual 2.1"}
+      - {name: "Identity provider (SSO, MFA)", source: "Conceptual 8.0"}
+  - domain: AEF-LOC-0017
+    impact: medium
+    elements:
+      - {name: Managed employee devices, source: "Conceptual 3.0"}
+      - {name: Contractor personal devices, source: "Conceptual 3.0"}
+      - {name: Application connectors in data centers, source: "Conceptual 8.0"}
+  - domain: AEF-LOC-0018
+    impact: high
+    elements:
+      - {name: CorvusGate full-tunnel VPN, source: "Conceptual 1.0"}
+      - {name: 14 internal subnets, source: "Conceptual 3.0"}
+      - {name: "Zero trust access broker (cloud)", source: "Conceptual 8.0, 10.0"}
   - {domain: AEF-LOC-0019, impact: none}     # GAP - no human confirmation
-  - {domain: AEF-LOC-0042, impact: high}
+  - domain: AEF-LOC-0042
+    impact: high
+    elements:
+      - {name: "Remote connections from homes, hotels, approved countries", source: "Conceptual UC01, FR4"}
   - {domain: AEF-LOC-0020, impact: medium}
   - {domain: AEF-LOC-0021, impact: none, confirmed_empty: true}
   - {domain: AEF-LOC-0031, impact: medium}
   - {domain: AEF-LOC-0036, impact: none, confirmed_empty: true}
-  - {domain: AEF-LOC-0037, impact: low}
+  - domain: AEF-LOC-0037
+    impact: low
+    elements:
+      - {name: Contractor firms, source: "Conceptual FR2, UC02"}
   - {domain: AEF-LOC-0038, impact: none}     # GAP - no human confirmation
-  - {domain: AEF-LOC-0026, impact: high, elements: [Credential and session thieves]}
+  - domain: AEF-LOC-0026
+    impact: high
+    elements:
+      - {name: Credential and session thieves, source: "Threat intelligence"}
 
 risks:
   - {id: RSK-01, statement: "A stolen contractor session exposes confidential ERP or engineering data", threatens: [VAL-02], domain: AEF-LOC-0004, likelihood: Medium, impact: High, treatment: Mitigate, domas_at_risk: [DOMA-01, DOMA-04], needs_security_input: true}

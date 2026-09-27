@@ -381,7 +381,7 @@
     "domain_impact": {
       "type": "array",
       "minItems": 1,
-      "description": "Domain Impact Worksheet data. Include every Baseline domain; an unconfirmed empty domain is a gap.",
+      "description": "Domain Impact Worksheet data. Include every Baseline domain. Every impacted leaf domain lists the organization's own elements, in its own words, extracted from the inputs (e.g., People: sales engineers; Information: trade secrets). An unconfirmed empty domain is a gap.",
       "items": {
         "type": "object",
         "required": [
@@ -403,8 +403,28 @@
           },
           "elements": {
             "type": "array",
+            "description": "Real-world or logical elements of this organization that belong in the domain, named in the organization's own terms. Use {name, source} to trace each element to its input (e.g., '10-K Item 1').",
             "items": {
-              "type": "string"
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "name"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "source": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
             }
           },
           "current": {

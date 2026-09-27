@@ -11,34 +11,34 @@ flowchart TB
     direction TB
     subgraph D0039["<b>Business Value</b>"]
       direction TB
-      D0040["<b>Financial Value</b><br/><small>AEF-LOC-0040</small>"]:::logical
+      D0040["<b>Financial Value</b><br/><small>AEF-LOC-0040</small><br/>• CorvusGate VPN end of support (2027-03-31)<br/>• Audit finding IA-2026-07<br/>• License and support cost"]:::logical
       D0041["<b>Social Impact</b><br/><small>AEF-LOC-0041</small>"]:::logical
     end
     D0006["<b>Products</b><br/><small>AEF-LOC-0006</small>"]:::physical
-    D0002["<b>Services</b><br/><small>AEF-LOC-0002</small><br/><i>(Available, Scalable, Customer-Focused)</i>"]:::logical
-    D0003["<b>Information</b><br/><small>AEF-LOC-0003</small><br/><i>(Confidential, Classified)</i>"]:::logical
-    D0004["<b>People</b><br/><small>AEF-LOC-0004</small><br/><i>(Authenticated, Authorized, Vetted)</i>"]:::physical
+    D0002["<b>Services</b><br/><small>AEF-LOC-0002</small><br/>• Remote access service (Gold tier, 99.9%)<br/>• Self-service access portal<br/><i>(Available, Scalable, Customer-Focused)</i>"]:::logical
+    D0003["<b>Information</b><br/><small>AEF-LOC-0003</small><br/>• ERP data (Confidential)<br/>• Engineering data (Confidential)<br/><i>(Confidential, Classified)</i>"]:::logical
+    D0004["<b>People</b><br/><small>AEF-LOC-0004</small><br/>• 4,200 remote employees<br/>• Contractors on personal devices<br/>• Travelers<br/>• Network Ops, SecOps, IAM teams<br/><i>(Authenticated, Authorized, Vetted)</i>"]:::physical
     D0005["<b>Processes</b><br/><small>AEF-LOC-0005</small><br/><b>GAP: unconfirmed</b>"]:::physical
     D0007["<b>Facilities</b><br/><small>AEF-LOC-0007</small>"]:::physical
     subgraph D0015["<b>Information Technology</b>"]
       direction TB
-      D0016["<b>Applications</b><br/><small>AEF-LOC-0016</small><br/><i>(Access-Controlled, Monitored)</i>"]:::physical
-      D0017["<b>Platforms</b><br/><small>AEF-LOC-0017</small><br/><i>(Access-Controlled, Vulnerability-Managed)</i>"]:::physical
-      D0018["<b>Network</b><br/><small>AEF-LOC-0018</small><br/><i>(Access-Controlled, Change-Managed)</i>"]:::physical
+      D0016["<b>Applications</b><br/><small>AEF-LOC-0016</small><br/>• 40 private web applications<br/>• Identity provider (SSO, MFA)<br/><i>(Access-Controlled, Monitored)</i>"]:::physical
+      D0017["<b>Platforms</b><br/><small>AEF-LOC-0017</small><br/>• Managed employee devices<br/>• Contractor personal devices<br/>• Application connectors in data centers<br/><i>(Access-Controlled, Vulnerability-Managed)</i>"]:::physical
+      D0018["<b>Network</b><br/><small>AEF-LOC-0018</small><br/>• CorvusGate full-tunnel VPN<br/>• 14 internal subnets<br/>• Zero trust access broker (cloud)<br/><i>(Access-Controlled, Change-Managed)</i>"]:::physical
       D0019["<b>Data</b><br/><small>AEF-LOC-0019</small><br/><b>GAP: unconfirmed</b>"]:::physical
     end
   end
-  D0042["<b>Public Internet</b><br/><small>AEF-LOC-0042</small>"]:::physical
+  D0042["<b>Public Internet</b><br/><small>AEF-LOC-0042</small><br/>• Remote connections from homes, hotels, approved countries"]:::physical
   subgraph D0020["<b>External Parties</b>"]
     direction TB
     D0021["<b>Public</b><br/><small>AEF-LOC-0021</small>"]:::physical
     subgraph D0031["<b>Trusted Parties</b>"]
       direction TB
       D0036["<b>Customers</b><br/><small>AEF-LOC-0036</small>"]:::physical
-      D0037["<b>Partners</b><br/><small>AEF-LOC-0037</small>"]:::physical
+      D0037["<b>Partners</b><br/><small>AEF-LOC-0037</small><br/>• Contractor firms"]:::physical
       D0038["<b>Suppliers</b><br/><small>AEF-LOC-0038</small><br/><b>GAP: unconfirmed</b>"]:::physical
     end
-    D0026["<b>Hostile Entities</b><br/><small>AEF-LOC-0026</small>"]:::physical
+    D0026["<b>Hostile Entities</b><br/><small>AEF-LOC-0026</small><br/>• Credential and session thieves"]:::physical
   end
   D0039 ~~~ D0006
   D0039 ~~~ D0002

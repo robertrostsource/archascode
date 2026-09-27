@@ -50,6 +50,7 @@ Ask at most **three** questions, and only when the answer changes the value anch
 - **Qualities are attributes, not outcomes.** Scalable, Compliant, Cost-Effective, Available, and similar words are SABSA / AEF business attributes. Record them as **DOMAs** (a domain qualified by attributes, e.g., `Enterprise::Technology::Platforms (Available)`), each supporting at least one outcome. Never list them as business outcomes.
 - **Use the attribute library and patterns.** Take attribute names from `library/attributes.yaml`. Use `attribute_patterns.yaml` to find related attributes and the downstream impact when an attribute fails.
 - **Separate intent from implementation.** Outcomes and DOMAs never name mechanisms. "Use ZTNA" is a solution choice, not a business outcome.
+- **Populate domains with the organization's own elements.** The worksheet is an abstraction of the business, not a heat map. Every impacted domain lists the concrete elements found in the inputs, in the organization's own words (People: sales engineers; Information: trade secrets; Facilities: Suzhou plant). Record each as `{name, source}` so it traces to the input.
 - **Use the taxonomy; do not invent domains.** Classify every element into a Baseline domain. If nothing fits, flag it rather than creating a new domain.
 - **Treat absence as a decision.** A Baseline domain with no elements is a potential blind spot. Mark it `confirmed_empty: true` only after a human confirms.
 - **Apply inheritance.** Subdomains inherit super-domain outcomes and DOMAs. Compute them; do not ask the architect to restate them.
@@ -80,7 +81,24 @@ For each outcome, select the SABSA / AEF attributes each impacted domain must ex
 List in-scope and out-of-scope statements, each tied to a domain where possible. Exclusions are explicit, not implied.
 
 ### Step 5 — Build the Domain Impact Worksheet
-Walk every Baseline domain. For each, record impact, elements, and current versus desired state. Use the relationship verbs to trace value backward:
+This is the core abstraction. Do it in two passes.
+
+**Pass 1: Extract elements.** Walk every Baseline domain. Use `extract_from` in `library/taxonomy/domains.yaml` to know what to look for and where it usually appears (10-K items in enterprise mode, intake sections in solution mode). For each domain:
+- List the organization's elements in its own terms, up to about eight per domain; keep the most value-relevant first.
+- Cite the source of each element (for example, `10-K Item 2`, `Conceptual 3.0`, `Meeting notes`).
+- Do not invent elements. If the domain is plausibly impacted but the inputs say nothing, record it with no elements, mark it **Needs Validation**, and raise a decision.
+
+Example (10-K, enterprise mode):
+
+| Domain | Elements | Source |
+|---|---|---|
+| People | Sales engineers; R&D engineers; manufacturing workforce | Item 1 Human Capital; Item 1A |
+| Information | Trade secrets; patents; customer confidential data | Item 1 IP; Item 1A |
+| Facilities | Chandler HQ; Suzhou plant; Eschenbach plant | Item 2 Properties |
+| Suppliers | Sole-source raw material suppliers | Item 1A |
+| Hostile Entities | Hackers; foreign governments; disgruntled employees | Item 1A |
+
+**Pass 2: Rate impact.** For each domain, set impact (high, medium, low, none) and, where useful, current versus desired state. Every impacted leaf domain must list at least one element. Use the relationship verbs to trace value backward:
 
 `Business Value ← Products / Services / Information ← People / Processes / IT / Facilities ← External Parties`
 
@@ -118,6 +136,7 @@ Flag the BCA **incomplete** if any of the following is true:
 - Any business outcome without a `creates_value` trace
 - Any quality attribute listed as a business outcome instead of a DOMA
 - Any DOMA that supports no business outcome
+- Any impacted leaf domain with no elements
 - Any Baseline domain empty and not human-confirmed
 - Any risk not tied to a value element
 - No decisions listed

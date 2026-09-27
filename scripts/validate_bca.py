@@ -70,6 +70,14 @@ def main(model_path):
         if i["impact"] == "none" and not i.get("confirmed_empty"):
             warnings.append(f"GAP {dom_names[i['domain']]} ({i['domain']}): marked not impacted, but no human confirmed it.")
 
+    # Every impacted leaf domain must show the organization's own elements.
+    tax = load(ROOT / "library/taxonomy/domains.yaml")["domains"]
+    containers = {d["parent"] for d in tax if d["parent"]}
+    for i in model["domain_impact"]:
+        if i["impact"] != "none" and i["domain"] not in containers and not i.get("elements"):
+            errors.append(f"{dom_names[i['domain']]} ({i['domain']}): impacted but lists no elements. "
+                          "Extract them from the inputs; see extract_from in library/taxonomy/domains.yaml.")
+
     if not model["scope"]["out"]:
         errors.append("scope: no out-of-scope statements")
 

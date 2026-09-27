@@ -120,9 +120,11 @@ def engagement_page(model_path, domains):
     s.append(indent("```mermaid\n" + strip_front_matter(render(m)) + "\n```") + "\n")
     s.append('=== "Relationships"\n\n')
     s.append(indent("```mermaid\n" + strip_front_matter(render(m, "impacted")) + "\n```") + "\n")
-    rows = [[name(i["domain"]), i["impact"], i.get("elements", []),
+    def el(e):
+        return f"{e['name']} ({e['source']})" if isinstance(e, dict) and e.get("source") else (e["name"] if isinstance(e, dict) else e)
+    rows = [[name(i["domain"]), i["impact"], "; ".join(el(e) for e in i.get("elements", [])),
              "Confirmed" if i.get("confirmed_empty") else ""] for i in m["domain_impact"]]
-    s.append('??? note "Domain impact detail"\n\n')
+    s.append('??? note "Domain elements and sources"\n\n')
     s.append("".join("    " + line + "\n" for line in table(["Domain", "Impact", "Elements", "Empty confirmed"], rows).splitlines()))
 
     s.append("\n## 7.0 Risks to Value\n")

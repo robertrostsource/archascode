@@ -54,27 +54,118 @@ scope:
 domain_impact:
   - {domain: AEF-LOC-0001, impact: high}
   - {domain: AEF-LOC-0039, impact: high}
-  - {domain: AEF-LOC-0040, impact: high}
-  - {domain: AEF-LOC-0041, impact: medium}
-  - {domain: AEF-LOC-0006, impact: high, elements: [Circuit materials, Ceramic substrates, Elastomeric materials]}
-  - {domain: AEF-LOC-0002, impact: medium, elements: [Technical and engineering support]}
-  - {domain: AEF-LOC-0003, impact: high, elements: [Formulations, Process know-how, Customer design data]}
-  - {domain: AEF-LOC-0004, impact: high, elements: [Sales engineers, R&D staff, "About 3,000 employees"]}
-  - {domain: AEF-LOC-0005, impact: medium, elements: [Manufacturing, Procurement, Order-to-cash]}
-  - {domain: AEF-LOC-0007, impact: high, elements: [Sites in U.S., Germany, Belgium, Hungary, England, China, South Korea]}
+  - domain: AEF-LOC-0040
+    impact: high
+    elements:
+      - {name: "Net sales ($810.8M, FY2025)", source: "10-K Item 7"}
+      - {name: Gross margin, source: "10-K Item 7"}
+      - {name: "Growth markets: EV/HEV, ADAS, aerospace and defense", source: "10-K Item 7"}
+      - {name: Goodwill and intangible assets, source: "10-K Item 7"}
+  - domain: AEF-LOC-0041
+    impact: medium
+    elements:
+      - {name: Employee health and safety, source: "10-K Item 1 Human Capital"}
+      - {name: "PFAS and emissions obligations", source: "10-K Item 1A"}
+  - domain: AEF-LOC-0006
+    impact: high
+    elements:
+      - {name: "Circuit materials (RO4000, RT/duroid)", source: "10-K Item 1"}
+      - {name: "Ceramic substrates (curamik)", source: "10-K Item 1"}
+      - {name: "Busbars (ROLINX)", source: "10-K Item 1"}
+      - {name: "Elastomeric materials (PORON, BISCO)", source: "10-K Item 1"}
+  - domain: AEF-LOC-0002
+    impact: medium
+    elements:
+      - {name: Technical and engineering support to OEMs, source: "10-K Item 1 Sales"}
+      - {name: Design-in collaboration, source: "10-K Item 1A"}
+      - {name: Order fulfillment and shipping, source: "10-K Item 1A"}
+  - domain: AEF-LOC-0003
+    impact: high
+    elements:
+      - {name: Trade secrets and process know-how, source: "10-K Item 1 IP"}
+      - {name: Patents and licenses, source: "10-K Item 1 IP"}
+      - {name: "Customer, supplier, and partner confidential data", source: "10-K Item 1A"}
+      - {name: Employee personal data, source: "10-K Item 1A"}
+      - {name: Financial records, source: "10-K Item 1A"}
+  - domain: AEF-LOC-0004
+    impact: high
+    elements:
+      - {name: Sales engineers, source: "10-K Item 1A key personnel"}
+      - {name: R&D and Innovation Center engineers, source: "10-K Item 1 R&D"}
+      - {name: "Manufacturing workforce (~3,000 employees)", source: "10-K Item 1 Human Capital"}
+      - {name: Executive leadership, source: "10-K Executive officers"}
+      - {name: CISO and cybersecurity team, source: "10-K Item 1C"}
+  - domain: AEF-LOC-0005
+    impact: medium
+    elements:
+      - {name: "Lean, just-in-time manufacturing", source: "10-K Item 1A"}
+      - {name: Raw-material procurement, source: "10-K Item 1"}
+      - {name: Order-to-cash and inventory, source: "10-K Item 1A"}
+      - {name: New product development, source: "10-K Item 1A"}
+      - {name: Financial reporting (ICFR), source: "10-K Item 1A ERP"}
+  - domain: AEF-LOC-0007
+    impact: high
+    elements:
+      - {name: "Chandler, Arizona HQ and plants", source: "10-K Item 2"}
+      - {name: "Rogers, Connecticut", source: "10-K Item 2"}
+      - {name: "Suzhou, China", source: "10-K Item 2"}
+      - {name: "Eschenbach, Germany", source: "10-K Item 2"}
+      - {name: "Evergem, Belgium", source: "10-K Item 2"}
+      - {name: "Budapest, Hungary; Ansan, Korea; Blackburn, England", source: "10-K Item 2"}
   - {domain: AEF-LOC-0015, impact: high}
-  - {domain: AEF-LOC-0016, impact: high, elements: [ERP (legacy and new)]}
-  - {domain: AEF-LOC-0017, impact: medium}
-  - {domain: AEF-LOC-0018, impact: medium}
-  - {domain: AEF-LOC-0019, impact: high}
-  - {domain: AEF-LOC-0042, impact: medium}
+  - domain: AEF-LOC-0016
+    impact: high
+    elements:
+      - {name: Legacy ERP, source: "10-K Item 1A"}
+      - {name: New ERP (multi-year rollout), source: "10-K Item 1A"}
+      - {name: Order processing and inventory systems, source: "10-K Item 1A"}
+  - domain: AEF-LOC-0017
+    impact: medium
+    elements:
+      - {name: Mobile devices, source: "10-K Item 1A"}
+      - {name: Endpoints, source: "10-K Item 1C"}
+      - {name: Third-party hosted systems, source: "10-K Item 1A"}
+  - domain: AEF-LOC-0018
+    impact: medium
+    elements:
+      - {name: Global site telecommunications, source: "10-K Item 1A"}
+      - {name: Perimeter network protections, source: "10-K Item 1C"}
+  - domain: AEF-LOC-0019
+    impact: high
+    elements:
+      - {name: Financial records and ledgers, source: "10-K Item 1A"}
+      - {name: Confidential design and customer data stores, source: "10-K Item 1A"}
+      - {name: Controlled unclassified information, source: "10-K Item 1C"}
+  - domain: AEF-LOC-0042
+    impact: medium
+    elements:
+      - {name: Internet-based business transactions, source: "10-K Item 1A"}
   - {domain: AEF-LOC-0020, impact: medium}
   - {domain: AEF-LOC-0021, impact: none, confirmed_empty: true}
   - {domain: AEF-LOC-0031, impact: high}
-  - {domain: AEF-LOC-0036, impact: high, elements: ["About 2,800 OEM and component-supplier customers"]}
-  - {domain: AEF-LOC-0037, impact: low}
-  - {domain: AEF-LOC-0038, impact: high, elements: [Sole or limited-source raw material suppliers]}
-  - {domain: AEF-LOC-0026, impact: high, elements: [Actors seeking proprietary technology]}
+  - domain: AEF-LOC-0036
+    impact: high
+    elements:
+      - {name: "~2,800 OEMs and component suppliers", source: "10-K Item 1"}
+      - {name: "Fabricators, converters, and distributors", source: "10-K Item 1"}
+  - domain: AEF-LOC-0037
+    impact: low
+    elements:
+      - {name: Third-party IT service providers, source: "10-K Item 1A"}
+      - {name: ERP implementation consultants, source: "10-K Item 1A"}
+  - domain: AEF-LOC-0038
+    impact: high
+    elements:
+      - {name: "Sole or limited-source raw material suppliers", source: "10-K Item 1A"}
+      - {name: "Copper, PTFE, silicone, ceramic inputs", source: "10-K Item 1"}
+  - domain: AEF-LOC-0026
+    impact: high
+    elements:
+      - {name: Computer hackers, source: "10-K Item 1A"}
+      - {name: Foreign governments, source: "10-K Item 1A"}
+      - {name: Cyber terrorists, source: "10-K Item 1A"}
+      - {name: Disgruntled employees, source: "10-K Item 1A"}
+      - {name: IP infringers and pirates, source: "10-K Item 1A"}
 
 risks:
   - {id: RSK-01, statement: Theft or disclosure of proprietary formulations erodes competitive advantage, threatens: [VAL-02], domain: AEF-LOC-0003, likelihood: Medium, impact: High, treatment: Mitigate, domas_at_risk: [DOMA-02], needs_security_input: true}
