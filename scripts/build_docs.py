@@ -222,11 +222,7 @@ def library_pages(domains_doc):
     return pages
 
 
-def main():
-    for d in GENERATED_DIRS:  # remove previous output, keep hand-written index pages
-        for f in (DOCS / d).glob("*.md"):
-            if f.name != "index.md":
-                f.unlink()
+def main(quiet=False):
     domains_doc = load(ROOT / "library/taxonomy/domains.yaml")
     domains = {d["id"]: d for d in domains_doc["domains"]}
 
@@ -235,11 +231,22 @@ def main():
         slug = mp.parent.relative_to(ROOT / "bca" / "engagements").as_posix().replace("/", "-")
         pages[f"bca/{slug}.md"] = engagement_page(mp, domains)
 
+    # Write only what changed, and remove stale pages, so `mkdocs serve`
+    # does not loop on its own output. Hand-written index pages are kept.
+    changed = 0
     for rel, text in pages.items():
         dest = DOCS / rel
         dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text(text, encoding="utf-8")
-    print(f"Generated {len(pages)} page(s) in docs/bca and docs/library")
+        if not dest.exists() or dest.read_text(encoding="utf-8") != text:
+            dest.write_text(text, encoding="utf-8")
+            changed += 1
+    for d in GENERATED_DIRS:
+        for f in (DOCS / d).glob("*.md"):
+            if f.name != "index.md" and f"{d}/{f.name}" not in pages:
+                f.unlink()
+                changed += 1
+    if not quiet:
+        print(f"Generated {len(pages)} page(s) in docs/bca and docs/library ({changed} updated)")
 
 
 if __name__ == "__main__":

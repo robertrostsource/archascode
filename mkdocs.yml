@@ -51,3 +51,11 @@ extra_css:
 
 # No "nav:" section on purpose. MkDocs builds the menu from the docs/ folder,
 # so a new SBAR or BCA appears on the site as soon as its file lands in docs/.
+
+# Regenerate BCA and library pages on every build, and rebuild when models
+# or library files change, so `mkdocs serve` always shows the current model.
+hooks:
+  - scripts/mkdocs_hooks.py
+watch:
+  - bca
+  - library
