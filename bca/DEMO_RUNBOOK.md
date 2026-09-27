@@ -1,112 +1,79 @@
-# Demo Runbook — Architecture as Code: Add a Partner
+# Demo Runbook — Architecture as Code: Three Additions
 
 > **FICTITIOUS DEMO CONTENT.** NovaCorp, Project WAYFINDER, and all products are invented.
-> **Time:** about 3 minutes. **Story:** one YAML edit flows through validation into the worksheet, the top risks, the strategies, and the attributes.
+> **Time:** about 3 minutes. **Story:** add a managed SOC partner in three additions (element, risk, strategy), and watch the guardrails and the page respond to each one.
 
 ---
 
 ## Before the session (5 minutes)
 
-1. In Terminal: `cd ~/Documents/archascode && git pull`
-2. Open the folder in VS Code (**File → Open Folder → Documents → archascode**).
-3. Open the terminal (**Ctrl+`**) and activate Python: `source .venv/bin/activate` (the prompt shows `(.venv)`).
-4. Confirm the baseline:
+1. In the VS Code terminal (**Terminal → New Terminal**):
    ```bash
-   python scripts/validate_bca.py bca/engagements/novacorp/wayfinder/model.yaml
+   cd ~/Documents/archascode
+   git pull
+   source .venv/bin/activate
+   python scripts/demo_bca.py reset
    ```
-   Expected result: **0 errors, 3 warnings** (GAP Processes, GAP Data, GAP Suppliers).
-5. Start the live preview and leave it running:
+   The last line ends with **0 error(s), 3 warning(s)**.
+2. Start the live preview and leave it running:
    ```bash
    mkdocs serve
    ```
-6. In the browser, open **http://127.0.0.1:8000/archascode/bca/novacorp-wayfinder/**
-   > The address must include **/archascode/**. Without it, the page is blank or shows "404".
-7. Open a **second terminal** for the validator: click **+** in the terminal panel, then run `source .venv/bin/activate`.
-8. In VS Code, open `bca/engagements/novacorp/wayfinder/model.yaml`.
+3. In the browser, open **http://127.0.0.1:8000/archascode/bca/novacorp-wayfinder/**
+   The address must include **/archascode/**.
+4. Open a **second terminal** (click **+** in the terminal panel), then run `source .venv/bin/activate`.
+5. In VS Code, open `bca/engagements/novacorp/wayfinder/model.yaml`, so the audience sees each addition appear.
 
-**Backups:** Keep the fallback image on local disk, and keep the live site open in a separate tab:
+**Backups:** the fallback image on local disk, and the published site in another tab:
 robertrostsource.github.io/archascode/bca/novacorp-wayfinder/
 
 ---
 
-## Live steps
+## Live: three additions (all commands in the second terminal)
 
-### 1. Add the element (Partners)
-
-Find this block, around line 102:
-
-```yaml
-  - domain: AEF-LOC-0037
-    impact: low
-    elements:
-      - {name: Contractor firms, source: "Conceptual FR2, UC02"}
-```
-
-Change `low` to `medium`, and add the last line:
-
-```yaml
-  - domain: AEF-LOC-0037
-    impact: medium
-    elements:
-      - {name: Contractor firms, source: "Conceptual FR2, UC02"}
-      - {name: Managed SOC provider, source: "Live demo"}
-```
-
-**Say:** "The domains hold the organization's own elements: its people, systems, and parties. We just added a partner."
-
-### 2. Add a risk to value
-
-Under `risks:`, click at the end of the **RSK-06** line, press Enter, and paste (keep the two leading spaces):
-
-```yaml
-  - {id: RSK-07, rank: 7, statement: "A compromised managed SOC provider is used to reach NovaCorp sessions and logs", threatens: [VAL-02], domain: AEF-LOC-0037, elements: [Managed SOC provider], likelihood: Low, impact: High, treatment: Mitigate, strategies: [STR-06]}
-```
-
-Save with **Cmd+S**.
-
-### 3. Show the guardrail
-
-In the second terminal:
+### Addition 1: the element
 
 ```bash
-python scripts/validate_bca.py bca/engagements/novacorp/wayfinder/model.yaml
+python scripts/demo_bca.py 1
 ```
 
-Expected result: **ERROR RSK-07: unknown strategy STR-06** (1 error, 3 warnings).
+- **You see:** "Managed SOC provider" appears in the Partners block of `model.yaml`. The result is **0 errors, 3 warnings**.
+- **Say:** "Domains hold the organization's own elements. We just added a partner."
 
-**Say:** "A risk without a mitigation strategy doesn't get in."
+### Addition 2: the risk to value
 
-### 4. Add the strategy and its attributes
-
-Under `strategies:`, click at the end of the **STR-05** line, press Enter, and paste:
-
-```yaml
-  - {id: STR-06, library_ref: STR-THIRD-PARTY-ASSURANCE, name: Assure the SOC partner, statement: "Vet, contract, and monitor the managed SOC provider in proportion to its access.", mitigates: [RSK-07], domains: [AEF-LOC-0037], attributes: [Vetted, Monitored, Assured, Risk-Managed]}
+```bash
+python scripts/demo_bca.py 2
 ```
 
-Save with **Cmd+S**.
+- **You see:** RSK-07 appears under `risks:`. The validator reports **ERROR RSK-07: unknown strategy STR-06**.
+- **Say:** "A risk without a mitigation strategy doesn't get in."
 
-### 5. Validate again
+### Addition 3: the strategy and its attributes
 
-Run the same command. Expected result: **0 errors, 3 warnings**.
+```bash
+python scripts/demo_bca.py 3
+```
 
-**Say:** "The three gaps stay. Hold on to them; the next two demos come back to them."
+- **You see:** STR-06 appears under `strategies:`. The result is **0 errors, 3 warnings**.
+- **Say:** "The three gaps stay. Hold on to them; the next two demos come back to them."
 
-### 6. Show the result
+### Show the page
 
-Switch to the browser tab. The page refreshes by itself after each save; if it does not, press **Cmd+Shift+R**. Walk top to bottom:
+Switch to the browser and refresh (**Cmd+Shift+R**):
 
-- **4.0 Domain Impact Worksheet:** the Partners box now lists *Managed SOC provider*.
-- **5.1 Top Risks to Value:** RSK-07 appears.
-- **5.2 Mitigation Strategies and Attributes:** STR-06, with *Vetted, Monitored, Assured, Risk-Managed*.
-- **5.3 Attributes by Domain (derived):** Partners now shows those attributes. Nobody typed them there.
+- **4.0 Worksheet:** the Partners box lists *Managed SOC provider*.
+- **5.1 Top Risks:** RSK-07.
+- **5.2 Strategies:** STR-06, with *Vetted, Monitored, Assured, Risk-Managed*.
+- **5.3 Attributes by Domain:** Partners now shows those attributes. Nobody typed them there.
 
-**Say:** "These attributes abstract the strategy. They become the NFRs the Conceptual Architecture must meet. One edit, and the whole chain stays consistent."
+**Say:** "The attributes abstract the strategy, and they become the NFRs of the Conceptual Architecture. Three additions, and the whole chain stays consistent."
 
-### 7. Reset for the next run
+### Reset for the next run
 
-- **Source Control** panel (branching icon) → right-click `model.yaml` → **Discard Changes**.
-- Validate again and confirm **0 errors, 3 warnings**.
+```bash
+python scripts/demo_bca.py reset
+```
 
 ---
 
@@ -114,12 +81,12 @@ Switch to the browser tab. The page refreshes by itself after each save; if it d
 
 | Symptom | Fix |
 |---|---|
-| Page shows "404" or is blank | Use the full address, including `/archascode/`: http://127.0.0.1:8000/archascode/bca/novacorp-wayfinder/ |
-| Page does not show the change | Check the file is saved (no dot on the VS Code tab). Press **Cmd+Shift+R**. If it still has not changed, press **Ctrl+C** in the preview terminal and run `mkdocs serve` again. |
-| `command not found: mkdocs` or `No module named yaml` | The virtual environment is not active. Run `source .venv/bin/activate`. |
-| `No such file or directory` | The terminal is in the wrong folder. Run `cd ~/Documents/archascode`. |
-| YAML or schema error after pasting | Check that the pasted line starts with exactly two spaces and a dash, aligned with the lines above it. |
-| Anything else on stage | Switch to the fallback image or the live site tab and keep talking. |
+| Page shows "404" or is blank | Use the full address, including `/archascode/`. |
+| Page does not change | Press **Cmd+Shift+R**. If it still has not changed, press **Ctrl+C** in the preview terminal and run `mkdocs serve` again. |
+| `command not found` or `No module named yaml` | Run `source .venv/bin/activate`. |
+| `No such file or directory` | Run `cd ~/Documents/archascode`. |
+| "Partners block not in its starting form" | Run `python scripts/demo_bca.py reset`, then start again at Addition 1. |
+| Anything else on stage | Switch to the fallback image or the published site and keep talking. |
 
 ---
 
