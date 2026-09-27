@@ -7,3 +7,4 @@ docs/library/*.md
 !docs/library/index.md
 site/
 __pycache__/
+.venv/
