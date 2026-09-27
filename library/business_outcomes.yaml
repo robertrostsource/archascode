@@ -1,0 +1,167 @@
+# archascode/library/business_outcomes.yaml
+# ---------------------------------------------------------------------------
+# PURPOSE
+#   Reusable business outcomes: the value an organization creates or
+#   protects. Solution BCAs reuse these as BROs and cite organization-specific
+#   evidence. Outcomes are value statements, never mechanisms and never
+#   quality attributes (those are DOMAs; see attributes.yaml).
+#
+# WHERE OUTCOMES COME FROM (enterprise "homework")
+#   - 10-K Item 1   Business: strategy, segments, markets, competitive basis
+#   - 10-K Item 1A  Risk Factors: what management says could destroy value
+#   - 10-K Item 1C  Cybersecurity: governance and program commitments
+#   - 10-K Item 7   MD&A: strategic priorities and performance drivers
+#
+# REFERENCE EXAMPLE
+#   Rogers Corporation (NYSE: ROG), Form 10-K for FY2025, filed 2026-02-19.
+#   https://www.sec.gov/Archives/edgar/data/84748/000008474826000007/rog-20251231.htm
+#   Evidence is paraphrased with the 10-K item reference. Public source only.
+# ---------------------------------------------------------------------------
+
+version: 0.1.0
+
+outcomes:
+
+  - id: BO-GROW-MARKETS
+    name: Grow revenue in target markets
+    value_domain: AEF-LOC-0040          # Financial Value
+    statement: Win and expand business in the markets the strategy targets.
+    typical_domains: [AEF-LOC-0006, AEF-LOC-0002, AEF-LOC-0036]
+    typical_attributes: [Competitive, Customer-Focused, Timely, Scalable]
+    evidence_sources: ["10-K Item 1", "10-K Item 7 strategy"]
+    example:
+      org: Rogers Corporation
+      evidence: Strategy is market-driven, targeting EV/HEV, ADAS, aerospace and defense, portable electronics, and renewable energy.
+      ref: "FY2025 10-K, Item 7 Company Overview and Strategy"
+
+  - id: BO-INNOVATION-IP
+    name: Sustain innovation leadership and protect proprietary technology
+    value_domain: AEF-LOC-0040
+    statement: Keep the competitive advantage created by R&D, trade secrets, and process know-how.
+    typical_domains: [AEF-LOC-0003, AEF-LOC-0004, AEF-LOC-0019, AEF-LOC-0016]
+    typical_attributes: [Innovative, Confidential, Classified, Access-Controlled, Integrity-Assured]
+    evidence_sources: ["10-K Item 1 Patents and IP", "10-K Item 1A IP risk"]
+    example:
+      org: Rogers Corporation
+      evidence: Innovation leadership is a core strategy pillar; the company relies on patents and trade secrets and sees piracy risk as acute in some foreign countries.
+      ref: "FY2025 10-K, Item 1 R&D and IP; Item 1A proprietary technology risk"
+
+  - id: BO-OPERATIONAL-EXCELLENCE
+    name: Improve profitability through operational excellence
+    value_domain: AEF-LOC-0040
+    statement: Raise margins through better yields, throughput, procurement, and footprint.
+    typical_domains: [AEF-LOC-0005, AEF-LOC-0007, AEF-LOC-0016]
+    typical_attributes: [Efficient, Measured, Cost-Effective, Profitable]
+    evidence_sources: ["10-K Item 7 strategy and executive summary"]
+    example:
+      org: Rogers Corporation
+      evidence: Operational excellence is a strategy pillar focused on yield, throughput, procurement, and manufacturing footprint consolidation.
+      ref: "FY2025 10-K, Item 7 Company Overview and Strategy"
+
+  - id: BO-SUPPLY-CONTINUITY
+    name: Assure continuity of critical supply
+    value_domain: AEF-LOC-0040
+    statement: Keep production running when critical inputs come from few suppliers.
+    typical_domains: [AEF-LOC-0038, AEF-LOC-0005, AEF-LOC-0003]
+    typical_attributes: [Available, Vetted, Monitored, Risk-Managed]
+    evidence_sources: ["10-K Item 1A supplier dependence", "10-K Item 1 raw materials"]
+    example:
+      org: Rogers Corporation
+      evidence: Depends on sole or limited-source suppliers for some critical raw materials while using lean, just-in-time inventory.
+      ref: "FY2025 10-K, Item 1A sole or limited source suppliers"
+
+  - id: BO-OPERATIONAL-RESILIENCE
+    name: Keep operations running through disruption
+    value_domain: AEF-LOC-0040
+    statement: Continue to produce, ship, and transact when facilities or systems are disrupted.
+    typical_domains: [AEF-LOC-0007, AEF-LOC-0015, AEF-LOC-0005]
+    typical_attributes: [Available, Recoverable, Incident-Managed, Crisis-Managed]
+    evidence_sources: ["10-K Item 1A catastrophe and IT disruption risks"]
+    example:
+      org: Rogers Corporation
+      evidence: Facilities, supply chains, distribution, and IT systems are exposed to catastrophic loss; IT systems run order processing, inventory, and shipping.
+      ref: "FY2025 10-K, Item 1A facilities disruption and IT breach risks"
+
+  - id: BO-TRUSTED-PARTNER
+    name: Remain a trusted custodian of customer and partner information
+    value_domain: AEF-LOC-0040
+    statement: Protect information that customers, suppliers, partners, and employees entrust to the organization.
+    typical_domains: [AEF-LOC-0003, AEF-LOC-0031, AEF-LOC-0019]
+    typical_attributes: [Confidential, Reputable, Access-Controlled, Compliant]
+    evidence_sources: ["10-K Item 1A IT breach and data protection", "10-K Item 1C"]
+    example:
+      org: Rogers Corporation
+      evidence: Holds proprietary information of customers, suppliers, and partners plus employee personal data; reports constant attack and names government-contractor cyber requirements.
+      ref: "FY2025 10-K, Item 1A IT breach risk; Item 1C Cybersecurity"
+
+  - id: BO-GLOBAL-MARKET-ACCESS
+    name: Retain access to global markets
+    value_domain: AEF-LOC-0040
+    statement: Keep the right to sell and operate across jurisdictions despite trade, export, and regulatory change.
+    typical_domains: [AEF-LOC-0006, AEF-LOC-0005, AEF-LOC-0036]
+    typical_attributes: [Compliant, Legal, Adaptable]
+    evidence_sources: ["10-K Item 1A international operations and trade relations"]
+    example:
+      org: Rogers Corporation
+      evidence: Most sales are outside the U.S.; tariffs, export controls, sanctions, and U.S.-China decoupling could restrict customers and markets.
+      ref: "FY2025 10-K, Item 1A international operations; U.S.-China trade relations"
+
+  - id: BO-SAFE-WORKPLACE
+    name: Everyone goes home safely
+    value_domain: AEF-LOC-0041          # Social Impact
+    statement: Protect the health and safety of employees and others at every site.
+    typical_domains: [AEF-LOC-0004, AEF-LOC-0007, AEF-LOC-0005]
+    typical_attributes: [Safe, Emergency-Managed, Educated, Aware]
+    evidence_sources: ["10-K Item 1 Human Capital"]
+    example:
+      org: Rogers Corporation
+      evidence: Health and safety is a stated critical objective with a safety-first vision for every employee every day.
+      ref: "FY2025 10-K, Item 1 Human Capital Management"
+
+  - id: BO-ENVIRONMENTAL-STEWARDSHIP
+    name: Meet environmental commitments and obligations
+    value_domain: AEF-LOC-0041
+    statement: Reduce environmental impact and meet evolving chemical, emissions, and disclosure rules.
+    typical_domains: [AEF-LOC-0006, AEF-LOC-0005, AEF-LOC-0007]
+    typical_attributes: [Environmentally-Responsible, Sustainable, Compliant, Reported]
+    evidence_sources: ["10-K Item 1A environmental, PFAS, and climate risks"]
+    example:
+      org: Rogers Corporation
+      evidence: Subject to environmental laws, PFAS regulation, EU emissions trading, and sustainability reporting requirements.
+      ref: "FY2025 10-K, Item 1A environmental and climate risks"
+
+  - id: BO-TRUSTED-REPORTING
+    name: Produce reliable financial and operational records
+    value_domain: AEF-LOC-0040
+    statement: Keep financial reporting and core business records accurate through system change.
+    typical_domains: [AEF-LOC-0016, AEF-LOC-0019, AEF-LOC-0005]
+    typical_attributes: [Integrity-Assured, Auditable, Change-Managed, Duty-Segregated]
+    evidence_sources: ["10-K Item 1A ERP implementation risk", "10-K Item 9A"]
+    example:
+      org: Rogers Corporation
+      evidence: A multi-year ERP replacement could affect internal control over financial reporting and introduce cybersecurity risk if delayed.
+      ref: "FY2025 10-K, Item 1A ERP implementation"
+
+  - id: BO-TALENT
+    name: Attract and retain specialized talent
+    value_domain: AEF-LOC-0040
+    statement: Keep the skilled technical, sales, and leadership people the strategy depends on.
+    typical_domains: [AEF-LOC-0004]
+    typical_attributes: [Experienced, Qualified, Resourced]
+    evidence_sources: ["10-K Item 1A personnel risk"]
+    example:
+      org: Rogers Corporation
+      evidence: Future success depends on hiring and retaining sales engineers and technical experts across regions.
+      ref: "FY2025 10-K, Item 1A specialized personnel"
+
+  - id: BO-TRANSACTION-VALUE
+    name: Realize value from acquisitions and divestitures
+    value_domain: AEF-LOC-0040
+    statement: Integrate acquired businesses and separate divested ones without losing value.
+    typical_domains: [AEF-LOC-0001, AEF-LOC-0015, AEF-LOC-0003]
+    typical_attributes: [Governed, Risk-Managed, Interoperable]
+    evidence_sources: ["10-K Item 1A M&A risk", "10-K Item 7 strategy"]
+    example:
+      org: Rogers Corporation
+      evidence: Synergistic M&A is a strategy pillar; integration difficulty and unknown liabilities are named risks.
+      ref: "FY2025 10-K, Item 1A transactions; Item 7 strategy"

@@ -1,0 +1,640 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/robertrostsource/archascode/schemas/bca_model.schema.json",
+  "title": "Business Contextual Architecture (BCA) Model",
+  "description": "Single source of truth for one BCA engagement (engagements/<name>/model.yaml). The agent writes this model; documents and diagrams are rendered from it and never edited by hand. Cross-reference checks (e.g., creates_value IDs exist, domain IDs exist in library/taxonomy/domains.yaml) are enforced by scripts/validate_bca.py, not by JSON Schema alone.",
+  "type": "object",
+  "required": [
+    "metadata",
+    "value",
+    "problem",
+    "business_outcomes",
+    "domas",
+    "scope",
+    "domain_impact",
+    "risks",
+    "decisions",
+    "sda_trigger"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "domainId": {
+      "type": "string",
+      "pattern": "^AEF-LOC-[0-9]{4}$"
+    },
+    "valueId": {
+      "type": "string",
+      "pattern": "^VAL-[0-9]{2,}$"
+    },
+    "necessity": {
+      "description": "RFC 2119 necessity level",
+      "enum": [
+        "MUST",
+        "MUST NOT",
+        "SHOULD",
+        "SHOULD NOT",
+        "MAY"
+      ]
+    },
+    "needsValidation": {
+      "type": "string",
+      "description": "Present when a fact is unconfirmed. States what must be confirmed and by whom."
+    }
+  },
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": [
+        "id",
+        "title",
+        "mode",
+        "status",
+        "classification",
+        "author",
+        "date"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^BCA-[A-Z0-9-]+$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "solution",
+            "enterprise"
+          ],
+          "description": "solution = project-scoped BCA (primary). enterprise = reusable organizational context that solution BCAs inherit."
+        },
+        "inherits_from": {
+          "type": "string",
+          "description": "Path to the enterprise-mode model this solution inherits (e.g., engagements/novacorp/enterprise/model.yaml)."
+        },
+        "status": {
+          "enum": [
+            "Draft",
+            "Ready_for_Approval",
+            "Approved_by_Customer",
+            "Approved_by_ARC"
+          ]
+        },
+        "classification": {
+          "enum": [
+            "Internal Use Only",
+            "Confidential",
+            "Highly Confidential",
+            "Restricted"
+          ]
+        },
+        "customer": {
+          "type": "string"
+        },
+        "project_ref": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "collaborators": {
+          "type": "array",
+          "description": "Evidence of collaboration. Absence of a security architect is an SDA trigger.",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "role"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "role": {
+                "enum": [
+                  "Business Owner",
+                  "Product Owner",
+                  "Solution Architect",
+                  "Security Architect",
+                  "Enterprise Architect",
+                  "Domain Architect",
+                  "Other"
+                ]
+              },
+              "contribution": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "value": {
+      "type": "array",
+      "minItems": 1,
+      "description": "The anchor. Every BCA starts here: what value the solution creates or protects.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "domain",
+          "statement"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/valueId"
+          },
+          "domain": {
+            "enum": [
+              "AEF-LOC-0039",
+              "AEF-LOC-0040",
+              "AEF-LOC-0041"
+            ]
+          },
+          "statement": {
+            "type": "string"
+          },
+          "measure": {
+            "type": "string",
+            "description": "How success is observed (target or KPI), if known."
+          },
+          "needs_validation": {
+            "$ref": "#/$defs/needsValidation"
+          }
+        }
+      }
+    },
+    "problem": {
+      "type": "object",
+      "required": [
+        "statement",
+        "current_state",
+        "desired_state"
+      ],
+      "additionalProperties": false,
+      "description": "The value gap: current versus desired state, in business terms.",
+      "properties": {
+        "statement": {
+          "type": "string"
+        },
+        "current_state": {
+          "type": "string"
+        },
+        "desired_state": {
+          "type": "string"
+        },
+        "value_at_stake": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/valueId"
+          }
+        }
+      }
+    },
+    "business_outcomes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "description",
+          "necessity",
+          "creates_value",
+          "domains"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^BRO[0-9]+$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "description": "The outcome in business terms: what value the solution creates or protects. Not a mechanism, and not a quality attribute such as Scalable or Compliant (those are DOMAs)."
+          },
+          "necessity": {
+            "$ref": "#/$defs/necessity"
+          },
+          "stakeholders": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "creates_value": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/valueId"
+            },
+            "description": "Required trace to value. A requirement without it is an orphan and must become a decision."
+          },
+          "domains": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/domainId"
+            }
+          },
+          "source": {
+            "type": "string"
+          },
+          "needs_validation": {
+            "$ref": "#/$defs/needsValidation"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "source"
+              ],
+              "properties": {
+                "source": {
+                  "type": "string",
+                  "description": "e.g., 10-K Item 1A Risk Factors, annual report, strategy statement, project charter"
+                },
+                "reference": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Where the outcome is grounded. Prefer enterprise sources such as the 10-K."
+          },
+          "library_ref": {
+            "type": "string",
+            "description": "ID in library/business_outcomes.yaml when reused"
+          },
+          "domas": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^DOMA-[0-9]{2,}$"
+            },
+            "description": "DOMAs that qualify how this outcome must be delivered"
+          }
+        }
+      },
+      "description": "Business outcomes (BRO): the value the solution creates or protects, traceable to enterprise evidence such as 10-K filings."
+    },
+    "domas": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Domain-attribute pairs (DOMAs): SABSA / AEF business attributes qualified by a Baseline domain, e.g., Enterprise::Technology::Platforms (Available). Attribute IDs come from library/attributes.yaml; related attributes are found via library/attribute_patterns.yaml.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "domain",
+          "attributes",
+          "supports"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^DOMA-[0-9]{2,}$"
+          },
+          "domain": {
+            "$ref": "#/$defs/domainId"
+          },
+          "attributes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "necessity": {
+            "$ref": "#/$defs/necessity"
+          },
+          "supports": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^BRO[0-9]+$"
+            },
+            "description": "Outcomes this DOMA protects or enables"
+          },
+          "rationale": {
+            "type": "string"
+          },
+          "needs_validation": {
+            "$ref": "#/$defs/needsValidation"
+          }
+        }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "required": [
+        "in",
+        "out"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "in": {
+          "type": "array",
+          "items": {
+            "$ref": "#/properties/scope/$defs/item"
+          }
+        },
+        "out": {
+          "type": "array",
+          "items": {
+            "$ref": "#/properties/scope/$defs/item"
+          }
+        }
+      },
+      "$defs": {
+        "item": {
+          "type": "object",
+          "required": [
+            "statement"
+          ],
+          "properties": {
+            "statement": {
+              "type": "string"
+            },
+            "domain": {
+              "$ref": "#/$defs/domainId"
+            },
+            "rationale": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "domain_impact": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Domain Impact Worksheet data. Include every Baseline domain; an unconfirmed empty domain is a gap.",
+      "items": {
+        "type": "object",
+        "required": [
+          "domain",
+          "impact"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "domain": {
+            "$ref": "#/$defs/domainId"
+          },
+          "impact": {
+            "enum": [
+              "none",
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "elements": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "current": {
+            "type": "string"
+          },
+          "desired": {
+            "type": "string"
+          },
+          "confirmed_empty": {
+            "type": "boolean",
+            "description": "true only when a human confirmed the domain is intentionally not impacted."
+          },
+          "inherited_requirements": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Computed from super-domain; do not hand-edit."
+          }
+        }
+      }
+    },
+    "risks": {
+      "type": "array",
+      "maxItems": 10,
+      "description": "Top risks to value only. Framed as: what could jeopardize value X?",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "statement",
+          "threatens",
+          "domain",
+          "treatment"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^RSK-[0-9]{2,}$"
+          },
+          "statement": {
+            "type": "string"
+          },
+          "threatens": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/valueId"
+            }
+          },
+          "domain": {
+            "$ref": "#/$defs/domainId"
+          },
+          "likelihood": {
+            "enum": [
+              "Low",
+              "Medium",
+              "High",
+              "Needs Validation"
+            ]
+          },
+          "impact": {
+            "enum": [
+              "Low",
+              "Medium",
+              "High",
+              "Needs Validation"
+            ]
+          },
+          "treatment": {
+            "enum": [
+              "Mitigate",
+              "Accept",
+              "Transfer",
+              "Avoid",
+              "Undecided"
+            ]
+          },
+          "strategies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "IDs from library/strategies.yaml"
+          },
+          "needs_security_input": {
+            "type": "boolean"
+          },
+          "domas_at_risk": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^DOMA-[0-9]{2,}$"
+            },
+            "description": "DOMAs whose failure this risk represents; use attribute patterns to trace downstream impact"
+          }
+        }
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Decisions the stakeholders must make. An empty list makes the BCA incomplete.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "question",
+          "owner",
+          "status"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^DEC-[0-9]{2,}$"
+          },
+          "question": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "owner": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "Open",
+              "Decided",
+              "Deferred"
+            ]
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "adr_needed": {
+            "type": "boolean"
+          },
+          "related": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Linked BRO, RSK, or domain IDs"
+          }
+        }
+      }
+    },
+    "sda_trigger": {
+      "type": "object",
+      "required": [
+        "recommended",
+        "reasons"
+      ],
+      "additionalProperties": false,
+      "description": "Independent SDA is an assurance check, not a default gate.",
+      "properties": {
+        "recommended": {
+          "type": "boolean"
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "high_value_at_risk",
+              "high_classification",
+              "standard_deviation_requested",
+              "no_security_architect_collaboration",
+              "governance_request"
+            ]
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "title"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "approvals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "phase",
+          "owner"
+        ],
+        "properties": {
+          "phase": {
+            "enum": [
+              "Initial Draft",
+              "Customer Approval",
+              "ARC Approval"
+            ]
+          },
+          "owner": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

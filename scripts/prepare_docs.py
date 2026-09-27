@@ -27,7 +27,7 @@ def prepare(text: str) -> str:
 DEST.mkdir(parents=True, exist_ok=True)
 count = 0
 for f in sorted(SRC.glob("*.md")):
-    if f.name.lower() in ("index.md", "readme.md"):
+    if f.name.lower() in ("index.md", "readme.md", "instructions.md"):  # agent instructions are not SBARs
         continue
     (DEST / f.name).write_text(prepare(f.read_text(encoding="utf-8")), encoding="utf-8")
     count += 1

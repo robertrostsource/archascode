@@ -1,0 +1,284 @@
+# archascode/library/taxonomy/domains.yaml
+# ---------------------------------------------------------------------------
+# ATTRIBUTION
+#   Domain model, IDs, and relationships: The Agile Security System(TM),
+#   Baseline Perspectives(TM), (c) Archistry / Andrew S. Townley.
+#   https://agilesecuritysystem.com
+#   Used under the Models license for developing and practicing architecture.
+#   No claim of invention, ownership, or exclusive rights is made.
+#   Descriptions below are paraphrased in the maintainer's own words; they
+#   are not reproductions of the book text.
+#   The Agile Security System is based on SABSA(R), (c) The SABSA Institute.
+# ---------------------------------------------------------------------------
+# COLOR CONVENTION (Domain Impact Worksheet)
+#   gold = physical domain (real-world elements)
+#   blue = logical domain (concepts and abstractions)
+# ---------------------------------------------------------------------------
+
+version: 0.1.0
+source: agile-security-system/baseline-perspectives
+perspectives: [enterprise, service, value_stream, external]
+
+domains:
+
+  # --- Boundary --------------------------------------------------------------
+  - id: AEF-LOC-0001
+    name: Enterprise Domain
+    type: boundary
+    parent: null
+    description: >
+      The organization's boundary. Elements the organization controls sit
+      inside; everything else sits outside. Requirements captured here come
+      from the highest available authority and are tested for whether they
+      are wishes, goals, or objectives.
+
+  # --- Value (anchor for every BCA) -------------------------------------------
+  - id: AEF-LOC-0039
+    name: Business Value
+    type: logical
+    parent: AEF-LOC-0001
+    description: >
+      What the organization's customers and stakeholders value. Split into
+      financial value and social impact; the balance differs for commercial,
+      non-profit, and public sector organizations.
+
+  - id: AEF-LOC-0040
+    name: Financial Value
+    type: logical
+    parent: AEF-LOC-0039
+    description: >
+      Financial measures of value, such as revenue, market share, solvency,
+      and goodwill. Created mainly through products, services, and
+      information.
+
+  - id: AEF-LOC-0041
+    name: Social Impact
+    type: logical
+    parent: AEF-LOC-0039
+    description: >
+      Measurable effect the organization has on communities and society.
+      Created mainly through products and services; intentionally not
+      linked directly to information.
+
+  # --- Offerings and information -----------------------------------------------
+  - id: AEF-LOC-0006
+    name: Products
+    type: physical
+    parent: AEF-LOC-0001
+    description: >
+      Physical products the organization makes. Products create business
+      value, may package information, and are designed and built by people.
+
+  - id: AEF-LOC-0002
+    name: Services
+    type: logical
+    parent: AEF-LOC-0001
+    description: >
+      Every service the organization provides, whether internal, external,
+      technical, or human-delivered. Services expose and act on information
+      and create business value.
+
+  - id: AEF-LOC-0003
+    name: Information
+    type: logical
+    parent: AEF-LOC-0001
+    description: >
+      All information the organization creates, consumes, or manages.
+      Represented physically or electronically by elements of the Data
+      domain; may carry intrinsic financial value.
+
+  # --- Delivery -----------------------------------------------------------------
+  - id: AEF-LOC-0004
+    name: People
+    type: physical
+    parent: AEF-LOC-0001
+    description: >
+      Employees, contractors, and part-time staff acting on the
+      organization's behalf.
+
+  - id: AEF-LOC-0005
+    name: Processes
+    type: physical
+    parent: AEF-LOC-0001
+    description: >
+      How day-to-day work gets done, documented or not. Processes structure
+      services and may be automated by applications.
+
+  - id: AEF-LOC-0007
+    name: Facilities
+    type: physical
+    parent: AEF-LOC-0001
+    description: >
+      Any facility used in operations, owned or not. Facilities contain
+      people, platforms, and networks, and host information.
+    needs_validation: >
+      Appendix G of the source lists Facilities as AEF-LOC-0006, which
+      collides with Products. The perspective diagrams use AEF-LOC-0007.
+      Confirm with Archistry.
+
+  # --- Information Technology ----------------------------------------------------
+  - id: AEF-LOC-0015
+    name: Information Technology
+    type: physical
+    parent: AEF-LOC-0001
+    description: >
+      Technology that delivers IT capability to the organization, regardless
+      of ownership or location. Decomposes into applications, platforms,
+      networks, and data.
+
+  - id: AEF-LOC-0016
+    name: Applications
+    type: physical
+    parent: AEF-LOC-0015
+    description: >
+      Every application used in operations. Applications support processes,
+      transform data, and run on platforms.
+
+  - id: AEF-LOC-0017
+    name: Platforms
+    type: physical
+    parent: AEF-LOC-0015
+    description: >
+      Hardware plus operating software capable of running applications,
+      including virtualized and cloud environments ("the OS down").
+
+  - id: AEF-LOC-0018
+    name: Network
+    type: physical
+    parent: AEF-LOC-0015
+    description: >
+      Devices and appliances that connect platforms and move data. Excludes
+      storage networks (see Data).
+
+  - id: AEF-LOC-0019
+    name: Data
+    type: physical
+    parent: AEF-LOC-0015
+    description: >
+      Physical and electronic media and repositories that hold information,
+      from databases and file shares to removable media and paper records.
+
+  # --- External Perspective --------------------------------------------------------
+  - id: AEF-LOC-0042
+    name: Public Internet
+    type: physical
+    parent: null
+    description: >
+      Global connectivity linking the enterprise network to external parties,
+      regardless of provider.
+
+  - id: AEF-LOC-0020
+    name: External Parties
+    type: physical
+    parent: null
+    description: >
+      Everyone outside the enterprise boundary not captured elsewhere.
+      Decompose only as far as the architecture needs.
+
+  - id: AEF-LOC-0021
+    name: Public
+    type: physical
+    parent: AEF-LOC-0020
+    description: >
+      The general public: neither trusted nor hostile until an interaction
+      places them in a more specific domain.
+
+  - id: AEF-LOC-0031
+    name: Trusted Parties
+    type: physical
+    parent: AEF-LOC-0020
+    description: >
+      External parties with a legitimate business relationship that
+      establishes trust and security requirements for interactions.
+
+  - id: AEF-LOC-0036
+    name: Customers
+    type: physical
+    parent: AEF-LOC-0031
+    description: Parties who acquire the organization's products or services, paid or free.
+
+  - id: AEF-LOC-0037
+    name: Partners
+    type: physical
+    parent: AEF-LOC-0031
+    description: >
+      Parties invested in the organization's success, typically providing
+      non-commodity outsourced services.
+
+  - id: AEF-LOC-0038
+    name: Suppliers
+    type: physical
+    parent: AEF-LOC-0031
+    description: >
+      Parties providing commodity products or services on standard terms,
+      including vendor-managed updates.
+
+  - id: AEF-LOC-0026
+    name: Hostile Entities
+    type: physical
+    parent: AEF-LOC-0020
+    description: >
+      Anyone intending harm. Usually exploits the legitimate interactions of
+      other external parties. The intent of an interaction, not the actor,
+      determines placement.
+
+# ---------------------------------------------------------------------------
+# RELATIONSHIPS (provider -> consumer), from the Baseline Perspectives.
+# The BCA agent uses these to trace value and to flag missing domains.
+# ---------------------------------------------------------------------------
+relationships:
+  # Value creation
+  - {from: AEF-LOC-0006, verb: create,    to: AEF-LOC-0039}
+  - {from: AEF-LOC-0002, verb: create,    to: AEF-LOC-0039}
+  - {from: AEF-LOC-0003, verb: has,       to: AEF-LOC-0040}
+  - {from: AEF-LOC-0007, verb: has,       to: AEF-LOC-0040}
+  # Offerings and information
+  - {from: AEF-LOC-0006, verb: package,   to: AEF-LOC-0003}
+  - {from: AEF-LOC-0002, verb: expose,    to: AEF-LOC-0003}
+  - {from: AEF-LOC-0019, verb: represent, to: AEF-LOC-0003}
+  # People
+  - {from: AEF-LOC-0004, verb: build,     to: AEF-LOC-0006}
+  - {from: AEF-LOC-0004, verb: deliver,   to: AEF-LOC-0002}
+  - {from: AEF-LOC-0004, verb: manage,    to: AEF-LOC-0003}
+  - {from: AEF-LOC-0004, verb: execute,   to: AEF-LOC-0005}
+  - {from: AEF-LOC-0004, verb: manage,    to: AEF-LOC-0007}
+  - {from: AEF-LOC-0004, verb: manage,    to: AEF-LOC-0015}
+  - {from: AEF-LOC-0004, verb: structure, to: AEF-LOC-0019}
+  - {from: AEF-LOC-0004, verb: use,       to: AEF-LOC-0017}
+  # Process and technology
+  - {from: AEF-LOC-0005, verb: structure, to: AEF-LOC-0002}
+  - {from: AEF-LOC-0016, verb: support,   to: AEF-LOC-0005}
+  - {from: AEF-LOC-0002, verb: request,   to: AEF-LOC-0016}
+  - {from: AEF-LOC-0016, verb: transform, to: AEF-LOC-0019}
+  - {from: AEF-LOC-0017, verb: host,      to: AEF-LOC-0016}
+  - {from: AEF-LOC-0017, verb: host,      to: AEF-LOC-0019}
+  - {from: AEF-LOC-0018, verb: connect,   to: AEF-LOC-0017}
+  - {from: AEF-LOC-0018, verb: transfer,  to: AEF-LOC-0019}
+  # Facilities
+  - {from: AEF-LOC-0007, verb: contain,   to: AEF-LOC-0004}
+  - {from: AEF-LOC-0007, verb: contain,   to: AEF-LOC-0017}
+  - {from: AEF-LOC-0007, verb: contain,   to: AEF-LOC-0018}
+  - {from: AEF-LOC-0007, verb: host,      to: AEF-LOC-0003}
+  # External
+  - {from: AEF-LOC-0042, verb: connect,   to: AEF-LOC-0018}
+  - {from: AEF-LOC-0036, verb: buy,       to: AEF-LOC-0006}
+  - {from: AEF-LOC-0036, verb: buy,       to: AEF-LOC-0002}
+  - {from: AEF-LOC-0037, verb: manage,    to: AEF-LOC-0002}
+  - {from: AEF-LOC-0037, verb: manage,    to: AEF-LOC-0015}
+  - {from: AEF-LOC-0038, verb: provide,   to: AEF-LOC-0015}
+  - {from: AEF-LOC-0038, verb: provide,   to: AEF-LOC-0007}
+
+# ---------------------------------------------------------------------------
+# WORKSHEET LAYOUT (used by scripts/render_domain_impact.py)
+# Rows are stacked top to bottom with invisible links so the Mermaid
+# worksheet reads like the original: value on top, delivery in the middle,
+# technology below the enterprise, external parties at the bottom.
+# ---------------------------------------------------------------------------
+worksheet_layout:
+  - [AEF-LOC-0039]
+  - [AEF-LOC-0006, AEF-LOC-0002, AEF-LOC-0003]
+  - [AEF-LOC-0004, AEF-LOC-0005, AEF-LOC-0007]
+  - [AEF-LOC-0015]
+  - [AEF-LOC-0001]
+  - [AEF-LOC-0042]
+  - [AEF-LOC-0020]
