@@ -9,10 +9,10 @@
     "value",
     "problem",
     "business_outcomes",
-    "domas",
     "scope",
     "domain_impact",
     "risks",
+    "strategies",
     "decisions",
     "sda_trigger"
   ],
@@ -275,67 +275,10 @@
           "library_ref": {
             "type": "string",
             "description": "ID in library/business_outcomes.yaml when reused"
-          },
-          "domas": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "pattern": "^DOMA-[0-9]{2,}$"
-            },
-            "description": "DOMAs that qualify how this outcome must be delivered"
           }
         }
       },
       "description": "Business outcomes (BRO): the value the solution creates or protects, traceable to enterprise evidence such as 10-K filings."
-    },
-    "domas": {
-      "type": "array",
-      "minItems": 1,
-      "description": "Domain-attribute pairs (DOMAs): SABSA / AEF business attributes qualified by a Baseline domain, e.g., Enterprise::Technology::Platforms (Available). Attribute IDs come from library/attributes.yaml; related attributes are found via library/attribute_patterns.yaml.",
-      "items": {
-        "type": "object",
-        "required": [
-          "id",
-          "domain",
-          "attributes",
-          "supports"
-        ],
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^DOMA-[0-9]{2,}$"
-          },
-          "domain": {
-            "$ref": "#/$defs/domainId"
-          },
-          "attributes": {
-            "type": "array",
-            "minItems": 1,
-            "items": {
-              "type": "string"
-            }
-          },
-          "necessity": {
-            "$ref": "#/$defs/necessity"
-          },
-          "supports": {
-            "type": "array",
-            "minItems": 1,
-            "items": {
-              "type": "string",
-              "pattern": "^BRO[0-9]+$"
-            },
-            "description": "Outcomes this DOMA protects or enables"
-          },
-          "rationale": {
-            "type": "string"
-          },
-          "needs_validation": {
-            "$ref": "#/$defs/needsValidation"
-          }
-        }
-      }
     },
     "scope": {
       "type": "object",
@@ -450,7 +393,7 @@
     "risks": {
       "type": "array",
       "maxItems": 10,
-      "description": "Top risks to value only. Framed as: what could jeopardize value X?",
+      "description": "Top risks to value, at most ten, spread across the impacted domains. Each answers: what could jeopardize value X? Each is located in the domain where the harm lands and is answered by strategies.",
       "items": {
         "type": "object",
         "required": [
@@ -507,20 +450,84 @@
           "strategies": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^STR-[0-9]{2,}$"
             },
-            "description": "IDs from library/strategies.yaml"
+            "description": "Mitigation strategies answering this risk (required unless treatment is Accept)"
           },
           "needs_security_input": {
             "type": "boolean"
           },
-          "domas_at_risk": {
+          "elements": {
             "type": "array",
             "items": {
-              "type": "string",
-              "pattern": "^DOMA-[0-9]{2,}$"
+              "type": "string"
             },
-            "description": "DOMAs whose failure this risk represents; use attribute patterns to trace downstream impact"
+            "description": "Elements of the domain the risk lands on, as named in domain_impact"
+          },
+          "rank": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "strategies": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Mitigation strategies. Each answers one or more risks, applies to one or more domains, and carries the business attributes that abstract it. Those attributes become the Conceptual Architecture's NFRs.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "statement",
+          "mitigates",
+          "domains",
+          "attributes"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^STR-[0-9]{2,}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "statement": {
+            "type": "string"
+          },
+          "library_ref": {
+            "type": "string",
+            "description": "ID in library/strategies.yaml when reused"
+          },
+          "mitigates": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^RSK-[0-9]{2,}$"
+            }
+          },
+          "domains": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/domainId"
+            }
+          },
+          "attributes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "description": "IDs from library/attributes.yaml"
+          },
+          "needs_validation": {
+            "$ref": "#/$defs/needsValidation"
           }
         }
       }

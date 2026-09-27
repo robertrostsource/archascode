@@ -61,14 +61,28 @@ def completeness(m):
         flags.append("No value element")
     if any(not b.get("creates_value") for b in m["business_outcomes"]):
         flags.append("A business outcome has no value trace")
-    supported = {b for d in m["domas"] for b in d["supports"]}
-    if any(b["id"] not in supported for b in m["business_outcomes"]):
-        flags.append("A business outcome is not qualified by any DOMA")
+    answered = {r for s in m["strategies"] for r in s["mitigates"]} | {
+        r["id"] for r in m["risks"] if r.get("strategies")}
+    if any(r["id"] not in answered and r["treatment"] != "Accept" for r in m["risks"]):
+        flags.append("A risk has no mitigation strategy")
     if not m["scope"].get("out"):
         flags.append("No out-of-scope statements")
     if not m.get("decisions"):
         flags.append("No decisions listed")
     return flags
+
+
+def attribute_view(m, name):
+    """Derive Domain (Attributes) from strategies: the SABSA DOMA view, never hand-written."""
+    view = {}
+    for s in m["strategies"]:
+        for d in s["domains"]:
+            for a in s["attributes"]:
+                view.setdefault(d, [])
+                if a not in view[d]:
+                    view[d].append(a)
+    return [[name(d), ", ".join(attrs),
+             ", ".join(s["id"] for s in m["strategies"] if d in s["domains"])] for d, attrs in view.items()]
 
 
 def engagement_page(model_path, domains):
@@ -85,17 +99,16 @@ def engagement_page(model_path, domains):
     if flags:
         s.append('!!! warning "Incomplete"\n' + "".join(f"    - {f}\n" for f in flags) + "\n")
     else:
-        s.append('!!! success "Completeness check passed"\n    Value, outcome traces, DOMAs, scope, and decisions are present.\n\n')
+        s.append('!!! success "Completeness check passed"\n    Value, outcome traces, risks with strategies, scope, and decisions are present.\n\n')
 
-    s.append("## 1.0 Problem Statement\n")
+    s.append("## 1.0 Problem Statement and Value\n")
     p = m["problem"]
     s.append(f"{p['statement']}\n\n- **Current state:** {p['current_state']}\n- **Desired state:** {p['desired_state']}\n\n")
-
-    s.append("## 2.0 Value Created or Protected\n")
+    s.append("**Value created or protected**\n\n")
     s.append(table(["ID", "Domain", "Statement", "Measure"],
                    [[v["id"], name(v["domain"]), v["statement"], v.get("measure", "")] for v in m["value"]]))
 
-    s.append("\n## 3.0 Business Outcomes\n")
+    s.append("\n## 2.0 Business Outcomes\n")
     s.append("Necessity levels follow RFC 2119.\n\n")
     s.append(table(["ID", "Outcome", "Necessity", "Value", "Domains", "Evidence"],
                    [[b["id"], f"**{b['name']}**: {b['description']}", b["necessity"], b["creates_value"],
@@ -103,23 +116,19 @@ def engagement_page(model_path, domains):
                      "; ".join(f"{e['source']} ({e.get('reference', '')})" for e in b.get("evidence", []))]
                     for b in m["business_outcomes"]]))
 
-    s.append("\n## 4.0 Domain Attributes (DOMAs)\n")
-    s.append(table(["ID", "DOMA", "Necessity", "Supports"],
-                   [[d["id"], f"{name(d['domain'])} ({', '.join(d['attributes'])})", d.get("necessity", ""), d["supports"]]
-                    for d in m["domas"]]))
-
-    s.append("\n## 5.0 Scope\n\n**In scope**\n\n")
+    s.append("\n## 3.0 Scope\n\n**In scope**\n\n")
     s += [f"- {i['statement']}\n" for i in m["scope"]["in"]]
     s.append("\n**Out of scope**\n\n")
     s += [f"- {i['statement']}" + (f" *({i['rationale']})*" if i.get("rationale") else "") + "\n" for i in m["scope"]["out"]]
 
-    s.append("\n## 6.0 Domain Impact Worksheet\n\n")
-    s.append("Gold = physical domain, blue = logical domain. Border weight shows impact; "
-             "a dashed red border marks a gap that needs a decision.\n\n")
+    s.append("\n## 4.0 Domain Impact Worksheet\n\n")
+    s.append("Each domain shows the organization's own elements, taken from the inputs. Gold = physical domain, "
+             "blue = logical domain. Border weight shows impact; a dashed red border marks a gap that needs a decision.\n\n")
     s.append('=== "Worksheet"\n\n')
     s.append(indent("```mermaid\n" + strip_front_matter(render(m)) + "\n```") + "\n")
     s.append('=== "Relationships"\n\n')
     s.append(indent("```mermaid\n" + strip_front_matter(render(m, "impacted")) + "\n```") + "\n")
+
     def el(e):
         return f"{e['name']} ({e['source']})" if isinstance(e, dict) and e.get("source") else (e["name"] if isinstance(e, dict) else e)
     rows = [[name(i["domain"]), i["impact"], "; ".join(el(e) for e in i.get("elements", [])),
@@ -127,26 +136,40 @@ def engagement_page(model_path, domains):
     s.append('??? note "Domain elements and sources"\n\n')
     s.append("".join("    " + line + "\n" for line in table(["Domain", "Impact", "Elements", "Empty confirmed"], rows).splitlines()))
 
-    s.append("\n## 7.0 Risks to Value\n")
-    s.append(table(["ID", "Risk", "Threatens", "Domain", "Likelihood", "Impact", "Treatment", "Security input"],
-                   [[r["id"], r["statement"], r["threatens"], name(r["domain"]), r.get("likelihood", ""),
-                     r.get("impact", ""), r["treatment"], "Yes" if r.get("needs_security_input") else ""]
-                    for r in m["risks"]]))
+    strat = {x["id"]: x for x in m["strategies"]}
+    def strategies_for(r):
+        ids = list(r.get("strategies", [])) + [x["id"] for x in m["strategies"] if r["id"] in x["mitigates"] and x["id"] not in r.get("strategies", [])]
+        return ", ".join(ids)
+    ranked = sorted(m["risks"], key=lambda r: r.get("rank", 99))
+    s.append("\n## 5.0 Risks and Mitigation Strategies\n\n")
+    s.append("A threat model at the business-outcome level: the top risks to value across all domains, the strategies "
+             "that answer them, and the business attributes that abstract those strategies.\n\n")
+    s.append("### 5.1 Top Risks to Value\n\n")
+    s.append(table(["Rank", "ID", "Risk", "Domain", "Threatens", "Likelihood", "Impact", "Treatment", "Strategies"],
+                   [[r.get("rank", ""), r["id"], r["statement"], name(r["domain"]), r["threatens"], r.get("likelihood", ""),
+                     r.get("impact", ""), r["treatment"], strategies_for(r)] for r in ranked]))
+    s.append("\n### 5.2 Mitigation Strategies and Attributes\n\n")
+    s.append("The attributes abstract each strategy. They become the non-functional requirements of the Conceptual Architecture.\n\n")
+    s.append(table(["ID", "Strategy", "Mitigates", "Domains", "Attributes"],
+                   [[x["id"], f"**{x.get('name', '')}**: {x['statement']}" if x.get("name") else x["statement"],
+                     x["mitigates"], [name(d) for d in x["domains"]], ", ".join(x["attributes"])] for x in m["strategies"]]))
+    s.append("\n### 5.3 Attributes by Domain (derived)\n\n")
+    s.append("Generated from the strategies above, in SABSA DOMA form: the attributes each domain must exhibit.\n\n")
+    s.append(table(["Domain", "Attributes", "From strategies"], attribute_view(m, name)))
 
-    s.append("\n## 8.0 Decisions Required\n")
+    s.append("\n## 6.0 Decisions Required\n")
     s.append(table(["ID", "Question", "Owner", "Status", "ADR"],
                    [[d["id"], d["question"], d["owner"], d["status"], "Yes" if d.get("adr_needed") else ""]
                     for d in m["decisions"]]))
-
-    t = m["sda_trigger"]
-    s.append("\n## 9.0 Independent SDA\n\n")
-    s.append(f"**Recommended:** {'Yes' if t['recommended'] else 'No'}  \n")
-    s.append(f"**Basis:** {', '.join(t['reasons']) or 'Collaboration evidence'}  \n")
-    if t.get("notes"):
-        s.append(f"**Notes:** {t['notes']}\n")
+    t_ = m["sda_trigger"]
+    s.append("\n**Independent Security Design Assessment**\n\n")
+    s.append(f"- **Recommended:** {'Yes' if t_['recommended'] else 'No'}\n")
+    s.append(f"- **Basis:** {', '.join(t_['reasons']) or 'Collaboration evidence'}\n")
+    if t_.get("notes"):
+        s.append(f"- **Notes:** {t_['notes']}\n")
 
     if m.get("references"):
-        s.append("\n## 10.0 References\n\n")
+        s.append("\n## 7.0 References\n\n")
         s += [f"- [{r['title']}]({r['url']})\n" if r.get("url") else f"- {r['title']}\n" for r in m["references"]]
 
     s.append(f"\n---\n*Source: `{model_path.relative_to(ROOT).as_posix()}`*\n")
@@ -187,6 +210,15 @@ def library_pages(domains_doc):
             s.append(f"- **Example ({ex['org']}):** {ex['evidence']} *({ex['ref']})*\n")
         s.append("\n")
     pages["library/business-outcomes.md"] = "".join(s)
+
+    strats = load(ROOT / "library/strategies.yaml")
+    s = [BANNER, "# Mitigation Strategies Library\n\n",
+         "Reusable answers to risks to value. Each strategy carries the business attributes that abstract it; "
+         "those attributes become the Conceptual Architecture's non-functional requirements.\n\n"]
+    s.append(table(["ID", "Strategy", "Mitigates", "Attributes", "Typical domains"],
+                   [[x["id"], f"**{x['name']}**: {x['statement']}", x["mitigates"], ", ".join(x["attributes"]),
+                     ", ".join(byid[d]["name"] for d in x["typical_domains"])] for x in strats["strategies"]]))
+    pages["library/strategies.md"] = "".join(s)
     return pages
 
 

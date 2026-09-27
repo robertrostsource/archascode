@@ -30,37 +30,48 @@ def main(model_path):
         report(errors, warnings); return 1
 
     vals = {v["id"] for v in model["value"]}
-    bros = {b["id"] for b in model["business_outcomes"]}
-    domas = {d["id"]: d for d in model["domas"]}
+    strategies_lib = {s["id"] for s in load(ROOT / "library/strategies.yaml")["strategies"]}
+    risks = {r["id"]: r for r in model["risks"]}
+    strategies = {s["id"]: s for s in model["strategies"]}
 
     def dom(ref, where):
         if ref not in domains:
             errors.append(f"{where}: unknown domain {ref}")
 
+    # Business outcomes: value created, never a quality attribute.
     for b in model["business_outcomes"]:
         for v in b["creates_value"]:
             if v not in vals: errors.append(f"{b['id']}: unknown value {v}")
         for d in b["domains"]: dom(d, b["id"])
-        for d in b.get("domas", []):
-            if d not in domas: errors.append(f"{b['id']}: unknown DOMA {d}")
         if b.get("library_ref") and b["library_ref"] not in outcomes_lib:
             warnings.append(f"{b['id']}: library_ref {b['library_ref']} not in library")
         if b["name"] in attributes:
-            errors.append(f"{b['id']}: '{b['name']}' is an attribute, not an outcome; move it to a DOMA")
+            errors.append(f"{b['id']}: '{b['name']}' is an attribute, not an outcome. "
+                          "Attributes abstract mitigation strategies; record it on a strategy.")
 
-    for d in domas.values():
-        dom(d["domain"], d["id"])
-        for a in d["attributes"]:
-            if a not in attributes: errors.append(f"{d['id']}: unknown attribute {a}")
-        for b in d["supports"]:
-            if b not in bros: errors.append(f"{d['id']}: supports unknown outcome {b}")
-
+    # Risks to value: located in a domain, answered by strategies.
     for r in model["risks"]:
         dom(r["domain"], r["id"])
         for v in r["threatens"]:
             if v not in vals: errors.append(f"{r['id']}: threatens unknown value {v}")
-        for d in r.get("domas_at_risk", []):
-            if d not in domas: errors.append(f"{r['id']}: unknown DOMA {d}")
+        for s in r.get("strategies", []):
+            if s not in strategies: errors.append(f"{r['id']}: unknown strategy {s}")
+        answered = set(r.get("strategies", [])) | {s["id"] for s in model["strategies"] if r["id"] in s["mitigates"]}
+        if r["treatment"] != "Accept" and not answered:
+            errors.append(f"{r['id']}: no mitigation strategy. Every risk not accepted needs at least one.")
+    risk_domains = {r["domain"] for r in model["risks"]}
+    if len(model["risks"]) >= 5 and len(risk_domains) < 3:
+        warnings.append(f"Top risks sit in only {len(risk_domains)} domain(s). Look across all impacted domains.")
+
+    # Strategies: mitigate risks, apply to domains, abstracted by attributes.
+    for s in model["strategies"]:
+        for rid in s["mitigates"]:
+            if rid not in risks: errors.append(f"{s['id']}: mitigates unknown risk {rid}")
+        for d in s["domains"]: dom(d, s["id"])
+        for a in s["attributes"]:
+            if a not in attributes: errors.append(f"{s['id']}: unknown attribute {a}")
+        if s.get("library_ref") and s["library_ref"] not in strategies_lib:
+            warnings.append(f"{s['id']}: library_ref {s['library_ref']} not in library/strategies.yaml")
 
     covered = {i["domain"] for i in model["domain_impact"]}
     for i in model["domain_impact"]: dom(i["domain"], "domain_impact")
