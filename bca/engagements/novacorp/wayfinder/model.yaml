@@ -1,0 +1,139 @@
+# FICTITIOUS DEMO CONTENT - COSAC 2026. NovaCorp, Project WAYFINDER, and all
+# products are invented. Solution-mode BCA behind the approved WAYFINDER
+# Conceptual Architecture. Demo A: three domains are marked "none" with no
+# human confirmation, so the validator warns and the worksheet shows GAPs.
+
+metadata:
+  id: BCA-NOVACORP-WAYFINDER
+  title: Project WAYFINDER - Remote Access Business Context (fictitious)
+  mode: solution
+  status: Approved_by_ARC
+  classification: Confidential
+  customer: Director of Infrastructure
+  project_ref: PRJ-2026-114
+  author: Enterprise Security Architect
+  date: "2026-09-18"
+  collaborators:
+    - {name: Director of Infrastructure, role: Business Owner}
+    - {name: Enterprise Security Architect, role: Security Architect, contribution: Domain impact and DOMAs}
+
+value:
+  - {id: VAL-01, domain: AEF-LOC-0040, statement: "Productive, anywhere access for 4,200 remote employees, contractors, and travelers", measure: "90% user satisfaction; 99.9% availability"}
+  - {id: VAL-02, domain: AEF-LOC-0040, statement: "Protect confidential ERP and engineering information from unauthorized disclosure", measure: "0 disclosure incidents"}
+  - {id: VAL-03, domain: AEF-LOC-0040, statement: "Avoid cost and audit exposure from an unsupported VPN and excessive network access"}
+
+problem:
+  statement: "Remote users get network-level access far beyond their role, the finding is open with Internal Audit, and the VPN platform reaches end of support in March 2027."
+  current_state: "4,200 users on a full-tunnel VPN reach 14 internal subnets regardless of role; contractors on personal devices get the same access as employees (IA-2026-07)."
+  desired_state: "Each user reaches only the applications they are authorized for, from any approved location, with the VPN retired before end of support."
+  value_at_stake: [VAL-01, VAL-02, VAL-03]
+
+business_outcomes:
+  - {id: BRO1, name: Least-privilege remote access, description: "Users and contractors reach only the applications they are authorized for, closing audit finding IA-2026-07.", necessity: MUST, creates_value: [VAL-02, VAL-03], domains: [AEF-LOC-0004, AEF-LOC-0016], evidence: [{source: Internal Audit, reference: IA-2026-07}]}
+  - {id: BRO2, name: Retire the legacy VPN on time, description: "Move all remote access off CorvusGate before end of support on 2027-03-31.", necessity: MUST, creates_value: [VAL-03], domains: [AEF-LOC-0002, AEF-LOC-0018], evidence: [{source: Project charter, reference: PRJ-2026-114}]}
+  - {id: BRO3, name: Work productively from anywhere, description: "Employees, contractors, and travelers open assigned applications from any approved location without friction.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0002, AEF-LOC-0004], evidence: [{source: Conceptual Architecture, reference: "FR4, UC01-UC03"}]}
+
+scope:
+  in:
+    - {statement: "Remote access for employees and contractors to 40 private web applications", domain: AEF-LOC-0002}
+    - {statement: "Identity, device, and access-policy integration", domain: AEF-LOC-0004}
+    - {statement: "Security monitoring of remote access", domain: AEF-LOC-0016}
+  out:
+    - {statement: "OT remote access to manufacturing tooling", rationale: "Separate OT program"}
+    - {statement: "Modernization of legacy applications", rationale: "Application owners' roadmaps"}
+
+domain_impact:
+  - {domain: AEF-LOC-0001, impact: high}
+  - {domain: AEF-LOC-0039, impact: high}
+  - domain: AEF-LOC-0040
+    impact: high
+    elements:
+      - {name: "CorvusGate VPN end of support (2027-03-31)", source: "Conceptual 1.0"}
+      - {name: "Audit finding IA-2026-07", source: "Conceptual 3.0"}
+      - {name: "License and support cost", source: "Conceptual NFR10-NFR11"}
+  - {domain: AEF-LOC-0041, impact: none, confirmed_empty: true}
+  - {domain: AEF-LOC-0006, impact: none, confirmed_empty: true}
+  - domain: AEF-LOC-0002
+    impact: high
+    elements:
+      - {name: "Remote access service (Gold tier, 99.9%)", source: "Conceptual 7.0"}
+      - {name: Self-service access portal, source: "Conceptual FR3"}
+  - domain: AEF-LOC-0003
+    impact: high
+    elements:
+      - {name: ERP data (Confidential), source: "Conceptual NFR5"}
+      - {name: Engineering data (Confidential), source: "Conceptual NFR5"}
+  - domain: AEF-LOC-0004
+    impact: high
+    elements:
+      - {name: "4,200 remote employees", source: "Conceptual 3.0"}
+      - {name: Contractors on personal devices, source: "Conceptual 3.0"}
+      - {name: Travelers, source: "Conceptual FR4"}
+      - {name: "Network Ops, SecOps, IAM teams", source: "Conceptual 9.0"}
+  - {domain: AEF-LOC-0005, impact: none}     # GAP - no human confirmation
+  - {domain: AEF-LOC-0007, impact: none, confirmed_empty: true}
+  - {domain: AEF-LOC-0015, impact: high}
+  - domain: AEF-LOC-0016
+    impact: high
+    elements:
+      - {name: 40 private web applications, source: "Conceptual 2.1"}
+      - {name: "Identity provider (SSO, MFA)", source: "Conceptual 8.0"}
+  - domain: AEF-LOC-0017
+    impact: medium
+    elements:
+      - {name: Managed employee devices, source: "Conceptual 3.0"}
+      - {name: Contractor personal devices, source: "Conceptual 3.0"}
+      - {name: Application connectors in data centers, source: "Conceptual 8.0"}
+  - domain: AEF-LOC-0018
+    impact: high
+    elements:
+      - {name: CorvusGate full-tunnel VPN, source: "Conceptual 1.0"}
+      - {name: 14 internal subnets, source: "Conceptual 3.0"}
+      - {name: "Zero trust access broker (cloud)", source: "Conceptual 8.0, 10.0"}
+  - {domain: AEF-LOC-0019, impact: none}     # GAP - no human confirmation
+  - domain: AEF-LOC-0042
+    impact: high
+    elements:
+      - {name: "Remote connections from homes, hotels, approved countries", source: "Conceptual UC01, FR4"}
+  - {domain: AEF-LOC-0020, impact: medium}
+  - {domain: AEF-LOC-0021, impact: none, confirmed_empty: true}
+  - {domain: AEF-LOC-0031, impact: medium}
+  - {domain: AEF-LOC-0036, impact: none, confirmed_empty: true}
+  - domain: AEF-LOC-0037
+    impact: low
+    elements:
+      - {name: Contractor firms, source: "Conceptual FR2, UC02"}
+  - {domain: AEF-LOC-0038, impact: none}     # GAP - no human confirmation
+  - domain: AEF-LOC-0026
+    impact: high
+    elements:
+      - {name: Credential and session thieves, source: "Threat intelligence"}
+
+risks:
+  - {id: RSK-01, rank: 1, statement: "A stolen contractor session exposes confidential ERP or engineering data", threatens: [VAL-02], domain: AEF-LOC-0004, elements: [Contractors on personal devices], likelihood: Medium, impact: High, treatment: Mitigate, strategies: [STR-01, STR-04], needs_security_input: true}
+  - {id: RSK-02, rank: 2, statement: "Malware on unmanaged personal devices steals credentials and data", threatens: [VAL-02], domain: AEF-LOC-0017, elements: [Contractor personal devices], likelihood: High, impact: High, treatment: Mitigate, strategies: [STR-02], needs_security_input: true}
+  - {id: RSK-03, rank: 3, statement: "Over-broad application entitlements persist, leaving IA-2026-07 open", threatens: [VAL-03], domain: AEF-LOC-0016, elements: [40 private web applications], likelihood: Medium, impact: High, treatment: Mitigate, strategies: [STR-01]}
+  - {id: RSK-04, rank: 4, statement: "An access-broker outage stops remote work for all users", threatens: [VAL-01], domain: AEF-LOC-0002, elements: ["Remote access service (Gold tier, 99.9%)"], likelihood: Low, impact: High, treatment: Mitigate, strategies: [STR-03]}
+  - {id: RSK-05, rank: 5, statement: "Migration slips past CorvusGate end of support", threatens: [VAL-03], domain: AEF-LOC-0018, elements: [CorvusGate full-tunnel VPN], likelihood: Medium, impact: Medium, treatment: Mitigate, strategies: [STR-05]}
+  - {id: RSK-06, rank: 6, statement: "Sessions from hostile hotel or travel networks are intercepted or hijacked", threatens: [VAL-02], domain: AEF-LOC-0042, elements: ["Remote connections from homes, hotels, approved countries"], likelihood: Medium, impact: Medium, treatment: Mitigate, strategies: [STR-01, STR-04]}
+
+strategies:
+  - {id: STR-01, library_ref: STR-LEAST-PRIVILEGE-ACCESS, name: Grant only the access each identity needs, statement: "Verify every user and authorize access application by application, never to the network.", mitigates: [RSK-01, RSK-03, RSK-06], domains: [AEF-LOC-0004, AEF-LOC-0016], attributes: [Identified, Authenticated, Authorized, Access-Controlled, Monitored]}
+  - {id: STR-02, library_ref: STR-DEVICE-TRUST, name: Trust only healthy devices, statement: "Check device posture before and during every session, including contractor-owned devices.", mitigates: [RSK-02], domains: [AEF-LOC-0017], attributes: [Configuration-Managed, Vulnerability-Managed, Access-Controlled, Monitored]}
+  - {id: STR-03, library_ref: STR-RESILIENT-SERVICE, name: "Deliver a resilient, usable service", statement: "Design the access service for Gold tier availability and a low-friction user experience.", mitigates: [RSK-04], domains: [AEF-LOC-0002], attributes: [Available, Scalable, Recoverable, Usable, Customer-Focused]}
+  - {id: STR-04, library_ref: STR-THREAT-DETECTION, name: Detect and respond to session abuse, statement: "Monitor sessions for theft and misuse and respond before an attacker reaches data.", mitigates: [RSK-01, RSK-06], domains: [AEF-LOC-0016, AEF-LOC-0042], attributes: [Threat-Managed, Monitored, Incident-Managed]}
+  - {id: STR-05, library_ref: STR-GOVERNED-CHANGE, name: Retire the VPN under control, statement: "Run the migration with owned milestones, measured progress, and preserved controls.", mitigates: [RSK-05], domains: [AEF-LOC-0018], attributes: [Change-Managed, Owned, Measured, Governed]}
+
+decisions:
+  - {id: DEC-01, question: "Is the cloud access-broker provider really outside Suppliers? It will carry every remote session.", owner: Director of Infrastructure, status: Open, related: [AEF-LOC-0038]}
+  - {id: DEC-02, question: "Do joiner, mover, leaver and access-request processes change? Processes is marked not impacted.", owner: IAM owner, status: Open, related: [AEF-LOC-0005]}
+  - {id: DEC-03, question: "Do session and access logs create new data stores with retention needs? Data is marked not impacted.", owner: Security Operations, status: Open, related: [AEF-LOC-0019]}
+
+sda_trigger:
+  recommended: true
+  reasons: [high_value_at_risk]
+  notes: "RSK-01 is High impact against a MUST outcome. Three domains are marked not impacted without a human decision."
+
+references:
+  - {title: "WAYFINDER Conceptual Architecture v1.0 (approved)"}
+  - {title: "Internal Audit finding IA-2026-07"}

@@ -5,14 +5,15 @@ Usage:
   python scripts/render_domain_impact.py engagements/<name>/model.yaml [--all-edges] [-o out.mmd]
 
 Reads library/taxonomy/domains.yaml for structure and relationships, and the
-model's domain_impact and domas sections for impact and attributes.
+model's domain_impact section for impact and elements. The worksheet shows
+elements only; attributes belong to mitigation strategies, not to domains.
 Output is regenerated, never hand-edited.
 
 Visual conventions
   Fill   gold = physical domain, blue = logical domain (Townley convention)
   Border thickness/color = impact (high / medium / low); dashed grey = none
   Dashed red border = GAP: domain not assessed, or 'none' without human confirmation
-  Italic text under a domain = DOMA attributes from the model
+  Bullets inside a domain = the organization's elements (up to 5; full list in the page table)
   Edges = optional provider -> consumer relationships (--edges impacted|all); off by default
           so the worksheet reads as a heat map, like the PowerPoint original
 """
@@ -40,6 +41,9 @@ IMPACT = {
 }
 
 
+MAX_ELEMENTS = 5  # the full list is in the page's detail table
+
+
 def nid(domain_id):
     return "D" + domain_id.split("-")[-1]
 
@@ -55,12 +59,6 @@ def render(model, edges="none"):
         children.setdefault(d["parent"], []).append(d["id"])
 
     impact = {i["domain"]: i for i in model["domain_impact"]}
-    attrs = {}
-    for doma in model.get("domas", []):
-        attrs.setdefault(doma["domain"], [])
-        for at in doma["attributes"]:
-            if at not in attrs[doma["domain"]]:
-                attrs[doma["domain"]].append(at)
 
     def level(did):
         i = impact.get(did)
@@ -76,11 +74,16 @@ def render(model, edges="none"):
             parts = [f"<b>{d['name']}</b>"]  # IDs appear in the detail table
         else:
             parts = [f"<b>{d['name']}</b>", f"<small>{did}</small>"]
-        if did in attrs:
-            parts.append(f"<i>({', '.join(attrs[did])})</i>")
+        if not container:
+            els = [e["name"] if isinstance(e, dict) else str(e)
+                   for e in impact.get(did, {}).get("elements", [])]
+            shown = els[:MAX_ELEMENTS]
+            if len(els) > MAX_ELEMENTS:
+                shown.append(f"+{len(els) - MAX_ELEMENTS} more")
+            parts += [f"• {e}" for e in shown]
         if level(did) == "gap":
-            parts.append("<b>GAP: not assessed</b>")
-        return "<br/>".join(parts).replace('"', "'")
+            parts.append("<b>GAP: not assessed</b>" if did not in impact else "<b>GAP: unconfirmed</b>")
+        return "<br/>".join(parts).replace('"', "'").replace("&", "#amp;")
 
     out = []
     title = model["metadata"]["title"]

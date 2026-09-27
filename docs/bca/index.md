@@ -9,9 +9,10 @@ Each engagement page in this section is generated from a `model.yaml` file and a
 - **Value** created or protected (financial value or social impact)
 - **Problem** stated as a value gap: current versus desired state
 - **Business outcomes** that trace to value and cite evidence, such as 10-K filings
-- **DOMAs**: business attributes (SABSA / AEF) qualifying the domains that deliver each outcome
-- **Domain Impact Worksheet**, rendered from the model; unassessed domains show as gaps
-- **Top risks to value**, **decisions required**, and whether an independent SDA is warranted
+- **Domain Impact Worksheet**: the organization's own elements placed in each domain, rendered from the model; unassessed domains show as gaps
+- **Top 10 risks to value** across all domains, each landing on named elements
+- **Mitigation strategies** answering each risk, abstracted by SABSA / AEF **business attributes**, which become the Conceptual Architecture's NFRs
+- **Decisions required**, and whether an independent SDA is warranted
 
 ## How to add a BCA
 

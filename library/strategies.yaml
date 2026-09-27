@@ -1,0 +1,119 @@
+# archascode/library/strategies.yaml
+# ---------------------------------------------------------------------------
+# PURPOSE
+#   Reusable risk mitigation strategies. In a BCA, every top risk to value is
+#   answered by one or more strategies, and every strategy carries the
+#   business attributes that abstract it. Those attributes become the
+#   non-functional requirements of the Conceptual Architecture.
+#
+#   Chain:  value <- risk (in a domain) <- strategy -> attributes
+#
+# ORIGIN
+#   The first seven strategies generalize the "Initial Observations" in
+#   Robert Rost, "Business Contextual Architecture - The Why, The Approach
+#   and A Case Study" (robertrost.com, 2023). Attribute names come from
+#   library/attributes.yaml (AEF(TM) attributes, (c) Archistry; SABSA(R)
+#   concept, (c) The SABSA Institute).
+# ---------------------------------------------------------------------------
+
+version: 0.1.0
+
+strategies:
+
+  - id: STR-OPS-CONTINUITY
+    name: Keep critical operations running
+    statement: Protect and sustain the systems that run manufacturing, orders, finance, and shipping, so that incidents and poorly executed changes do not stop the business.
+    attributes: [Available, Recoverable, Change-Managed, Configuration-Managed, Monitored, Risk-Managed, Vulnerability-Managed, Threat-Managed, Usable]
+    typical_domains: [AEF-LOC-0016, AEF-LOC-0017, AEF-LOC-0005, AEF-LOC-0007]
+    mitigates: Disruption of critical business systems by cyberattack, failure, or change
+
+  - id: STR-IP-PROTECTION
+    name: Protect proprietary information
+    statement: Classify trade secrets, designs, and confidential customer data, and restrict, monitor, and govern who can use them.
+    attributes: [Confidential, Classified, Access-Controlled, Duty-Segregated, Aware, Governed, Monitored]
+    typical_domains: [AEF-LOC-0003, AEF-LOC-0019, AEF-LOC-0004]
+    mitigates: Theft or disclosure of intellectual property and confidential information
+
+  - id: STR-HARMONIZED-COMPLIANCE
+    name: Harmonize regulatory and legal obligations
+    statement: Map privacy, export, securities, and cybersecurity obligations across jurisdictions to one control framework with clear ownership.
+    attributes: [Compliant, Legal, Auditable, Owned, Governed]
+    typical_domains: [AEF-LOC-0001, AEF-LOC-0006, AEF-LOC-0003]
+    mitigates: Regulatory breach, fines, loss of market access
+
+  - id: STR-CLOUD-GOVERNANCE
+    name: Govern the cloud estate
+    statement: Extend risk, control, identity, and monitoring objectives to cloud environments under a provider-agnostic framework.
+    attributes: [Governed, Risk-Managed, Access-Controlled, Configuration-Managed, Monitored]
+    typical_domains: [AEF-LOC-0017, AEF-LOC-0038]
+    mitigates: Misconfiguration or ungoverned use of cloud services
+
+  - id: STR-SEGMENTATION
+    name: Contain compromise
+    statement: Segment networks and systems so that a compromise is detected sooner and its blast radius stays small.
+    attributes: [Access-Controlled, Monitored, Threat-Managed, Recoverable]
+    typical_domains: [AEF-LOC-0018, AEF-LOC-0017]
+    mitigates: Lateral movement and wide-scale impact after an intrusion
+
+  - id: STR-THIRD-PARTY-ASSURANCE
+    name: Assure suppliers and partners
+    statement: Vet, contract, and monitor suppliers and partners in proportion to the value they can affect.
+    attributes: [Vetted, Monitored, Risk-Managed, Assured, Available]
+    typical_domains: [AEF-LOC-0038, AEF-LOC-0037]
+    mitigates: Supply disruption or compromise through a third party
+
+  - id: STR-THREAT-DETECTION
+    name: Detect and respond to threats
+    statement: Monitor for threats continuously and respond fast enough to limit harm.
+    attributes: [Threat-Managed, Monitored, Incident-Managed, Reported]
+    typical_domains: [AEF-LOC-0015, AEF-LOC-0016, AEF-LOC-0042]
+    mitigates: Undetected intrusion and long attacker dwell time
+
+  - id: STR-LEAST-PRIVILEGE-ACCESS
+    name: Grant only the access each identity needs
+    statement: Identify and verify every user and device, and authorize access application by application.
+    attributes: [Identified, Authenticated, Authorized, Access-Controlled, Monitored]
+    typical_domains: [AEF-LOC-0004, AEF-LOC-0016, AEF-LOC-0017]
+    mitigates: Excessive access, credential or session theft
+
+  - id: STR-DEVICE-TRUST
+    name: Trust only healthy devices
+    statement: Check device posture before and during access, including devices the organization does not own.
+    attributes: [Configuration-Managed, Vulnerability-Managed, Access-Controlled, Monitored]
+    typical_domains: [AEF-LOC-0017]
+    mitigates: Malware or infostealers on endpoints
+
+  - id: STR-RESILIENT-SERVICE
+    name: Deliver a resilient, usable service
+    statement: Design the service for its availability tier, capacity, and user experience, with tested recovery.
+    attributes: [Available, Scalable, Recoverable, Incident-Managed, Usable, Customer-Focused]
+    typical_domains: [AEF-LOC-0002]
+    mitigates: Outages and friction that stop work or drive workarounds
+
+  - id: STR-GOVERNED-CHANGE
+    name: Transform systems under control
+    statement: Run major system changes and migrations with ownership, milestones, and preserved controls.
+    attributes: [Change-Managed, Owned, Measured, Integrity-Assured, Auditable, Governed]
+    typical_domains: [AEF-LOC-0016, AEF-LOC-0005, AEF-LOC-0018]
+    mitigates: Failed or late transformation that weakens controls
+
+  - id: STR-SITE-RESILIENCE
+    name: Prepare sites for crises and emergencies
+    statement: Plan, exercise, and recover site operations after disasters and other serious events.
+    attributes: [Crisis-Managed, Emergency-Managed, Recoverable, Safe]
+    typical_domains: [AEF-LOC-0007]
+    mitigates: Loss of a key site
+
+  - id: STR-KNOWLEDGE-RETENTION
+    name: Retain critical expertise
+    statement: Document, share, and retain the knowledge of scarce specialists.
+    attributes: [Documented, Experienced, Qualified, Resourced, Owned]
+    typical_domains: [AEF-LOC-0004]
+    mitigates: Loss of key people and the knowledge they carry
+
+  - id: STR-PRIVACY-BY-DESIGN
+    name: Build privacy into processing
+    statement: Collect, use, and retain personal data only as permitted, and prove it.
+    attributes: [Confidential, Classified, Compliant, Legal, Auditable]
+    typical_domains: [AEF-LOC-0019, AEF-LOC-0003]
+    mitigates: Privacy law violations

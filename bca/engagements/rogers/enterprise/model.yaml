@@ -26,24 +26,13 @@ problem:
   value_at_stake: [VAL-01, VAL-02]
 
 business_outcomes:
-  - {id: BRO1, name: Grow revenue in target markets, description: "Win and expand business in EV/HEV, ADAS, aerospace and defense, and renewable energy markets.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0006, AEF-LOC-0036], library_ref: BO-GROW-MARKETS, evidence: [{source: "10-K Item 7", reference: Company Overview and Strategy}], domas: [DOMA-01]}
-  - {id: BRO2, name: Protect proprietary technology, description: "Preserve the advantage created by R&D, trade secrets, and process know-how.", necessity: MUST, creates_value: [VAL-02, VAL-01], domains: [AEF-LOC-0003, AEF-LOC-0019], library_ref: BO-INNOVATION-IP, evidence: [{source: "10-K Item 1A", reference: Proprietary technology risk}], domas: [DOMA-02, DOMA-03]}
-  - {id: BRO3, name: Keep operations running through disruption, description: "Continue to produce, ship, and transact when sites or systems are disrupted.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0007, AEF-LOC-0016, AEF-LOC-0017], library_ref: BO-OPERATIONAL-RESILIENCE, evidence: [{source: "10-K Item 1A", reference: Facilities and IT disruption}], domas: [DOMA-04, DOMA-05]}
-  - {id: BRO4, name: Assure continuity of critical supply, description: "Sustain production despite sole or limited-source raw materials.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0038, AEF-LOC-0005], library_ref: BO-SUPPLY-CONTINUITY, evidence: [{source: "10-K Item 1A", reference: Supplier dependence}], domas: [DOMA-06]}
-  - {id: BRO5, name: Retain access to global markets, description: "Keep selling and operating across jurisdictions despite tariffs and export controls.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0006, AEF-LOC-0005], library_ref: BO-GLOBAL-MARKET-ACCESS, evidence: [{source: "10-K Item 1A", reference: International operations; U.S.-China trade}], domas: [DOMA-07]}
-  - {id: BRO6, name: Produce reliable financial records through ERP change, description: "Keep financial reporting accurate during the ERP replacement.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0016, AEF-LOC-0019], library_ref: BO-TRUSTED-REPORTING, evidence: [{source: "10-K Item 1A", reference: ERP implementation}], domas: [DOMA-08]}
-  - {id: BRO7, name: Everyone goes home safely, description: "Protect employee health and safety at every site.", necessity: MUST, creates_value: [VAL-03], domains: [AEF-LOC-0004, AEF-LOC-0007], library_ref: BO-SAFE-WORKPLACE, evidence: [{source: "10-K Item 1", reference: Human Capital}], domas: [DOMA-09]}
-
-domas:
-  - {id: DOMA-01, domain: AEF-LOC-0036, attributes: [Customer-Focused, Timely], necessity: MUST, supports: [BRO1]}
-  - {id: DOMA-02, domain: AEF-LOC-0003, attributes: [Confidential, Classified], necessity: MUST, supports: [BRO2]}
-  - {id: DOMA-03, domain: AEF-LOC-0004, attributes: [Aware, Vetted], necessity: SHOULD, supports: [BRO2]}
-  - {id: DOMA-04, domain: AEF-LOC-0016, attributes: [Available, Recoverable], necessity: MUST, supports: [BRO3]}
-  - {id: DOMA-05, domain: AEF-LOC-0007, attributes: [Crisis-Managed, Recoverable], necessity: MUST, supports: [BRO3]}
-  - {id: DOMA-06, domain: AEF-LOC-0038, attributes: [Vetted, Monitored], necessity: MUST, supports: [BRO4]}
-  - {id: DOMA-07, domain: AEF-LOC-0006, attributes: [Compliant, Legal], necessity: MUST, supports: [BRO5]}
-  - {id: DOMA-08, domain: AEF-LOC-0019, attributes: [Integrity-Assured, Auditable], necessity: MUST, supports: [BRO6, BRO2]}
-  - {id: DOMA-09, domain: AEF-LOC-0007, attributes: [Safe, Emergency-Managed], necessity: MUST, supports: [BRO7]}
+  - {id: BRO1, name: Grow revenue in target markets, description: "Win and expand business in EV/HEV, ADAS, aerospace and defense, and renewable energy markets.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0006, AEF-LOC-0036], library_ref: BO-GROW-MARKETS, evidence: [{source: "10-K Item 7", reference: Company Overview and Strategy}]}
+  - {id: BRO2, name: Protect proprietary technology, description: "Preserve the advantage created by R&D, trade secrets, and process know-how.", necessity: MUST, creates_value: [VAL-02, VAL-01], domains: [AEF-LOC-0003, AEF-LOC-0019], library_ref: BO-INNOVATION-IP, evidence: [{source: "10-K Item 1A", reference: Proprietary technology risk}]}
+  - {id: BRO3, name: Keep operations running through disruption, description: "Continue to produce, ship, and transact when sites or systems are disrupted.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0007, AEF-LOC-0016, AEF-LOC-0017], library_ref: BO-OPERATIONAL-RESILIENCE, evidence: [{source: "10-K Item 1A", reference: Facilities and IT disruption}]}
+  - {id: BRO4, name: Assure continuity of critical supply, description: "Sustain production despite sole or limited-source raw materials.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0038, AEF-LOC-0005], library_ref: BO-SUPPLY-CONTINUITY, evidence: [{source: "10-K Item 1A", reference: Supplier dependence}]}
+  - {id: BRO5, name: Retain access to global markets, description: "Keep selling and operating across jurisdictions despite tariffs and export controls.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0006, AEF-LOC-0005], library_ref: BO-GLOBAL-MARKET-ACCESS, evidence: [{source: "10-K Item 1A", reference: International operations; U.S.-China trade}]}
+  - {id: BRO6, name: Produce reliable financial records through ERP change, description: "Keep financial reporting accurate during the ERP replacement.", necessity: MUST, creates_value: [VAL-01], domains: [AEF-LOC-0016, AEF-LOC-0019], library_ref: BO-TRUSTED-REPORTING, evidence: [{source: "10-K Item 1A", reference: ERP implementation}]}
+  - {id: BRO7, name: Everyone goes home safely, description: "Protect employee health and safety at every site.", necessity: MUST, creates_value: [VAL-03], domains: [AEF-LOC-0004, AEF-LOC-0007], library_ref: BO-SAFE-WORKPLACE, evidence: [{source: "10-K Item 1", reference: Human Capital}]}
 
 scope:
   in:
@@ -54,33 +43,141 @@ scope:
 domain_impact:
   - {domain: AEF-LOC-0001, impact: high}
   - {domain: AEF-LOC-0039, impact: high}
-  - {domain: AEF-LOC-0040, impact: high}
-  - {domain: AEF-LOC-0041, impact: medium}
-  - {domain: AEF-LOC-0006, impact: high, elements: [Circuit materials, Ceramic substrates, Elastomeric materials]}
-  - {domain: AEF-LOC-0002, impact: medium, elements: [Technical and engineering support]}
-  - {domain: AEF-LOC-0003, impact: high, elements: [Formulations, Process know-how, Customer design data]}
-  - {domain: AEF-LOC-0004, impact: high, elements: [Sales engineers, R&D staff, "About 3,000 employees"]}
-  - {domain: AEF-LOC-0005, impact: medium, elements: [Manufacturing, Procurement, Order-to-cash]}
-  - {domain: AEF-LOC-0007, impact: high, elements: [Sites in U.S., Germany, Belgium, Hungary, England, China, South Korea]}
+  - domain: AEF-LOC-0040
+    impact: high
+    elements:
+      - {name: "Net sales ($810.8M, FY2025)", source: "10-K Item 7"}
+      - {name: Gross margin, source: "10-K Item 7"}
+      - {name: "Growth markets: EV/HEV, ADAS, aerospace and defense", source: "10-K Item 7"}
+      - {name: Goodwill and intangible assets, source: "10-K Item 7"}
+  - domain: AEF-LOC-0041
+    impact: medium
+    elements:
+      - {name: Employee health and safety, source: "10-K Item 1 Human Capital"}
+      - {name: "PFAS and emissions obligations", source: "10-K Item 1A"}
+  - domain: AEF-LOC-0006
+    impact: high
+    elements:
+      - {name: "Circuit materials (RO4000, RT/duroid)", source: "10-K Item 1"}
+      - {name: "Ceramic substrates (curamik)", source: "10-K Item 1"}
+      - {name: "Busbars (ROLINX)", source: "10-K Item 1"}
+      - {name: "Elastomeric materials (PORON, BISCO)", source: "10-K Item 1"}
+  - domain: AEF-LOC-0002
+    impact: medium
+    elements:
+      - {name: Technical and engineering support to OEMs, source: "10-K Item 1 Sales"}
+      - {name: Design-in collaboration, source: "10-K Item 1A"}
+      - {name: Order fulfillment and shipping, source: "10-K Item 1A"}
+  - domain: AEF-LOC-0003
+    impact: high
+    elements:
+      - {name: Trade secrets and process know-how, source: "10-K Item 1 IP"}
+      - {name: Patents and licenses, source: "10-K Item 1 IP"}
+      - {name: "Customer, supplier, and partner confidential data", source: "10-K Item 1A"}
+      - {name: Employee personal data, source: "10-K Item 1A"}
+      - {name: Financial records, source: "10-K Item 1A"}
+  - domain: AEF-LOC-0004
+    impact: high
+    elements:
+      - {name: Sales engineers, source: "10-K Item 1A key personnel"}
+      - {name: R&D and Innovation Center engineers, source: "10-K Item 1 R&D"}
+      - {name: "Manufacturing workforce (~3,000 employees)", source: "10-K Item 1 Human Capital"}
+      - {name: Executive leadership, source: "10-K Executive officers"}
+      - {name: CISO and cybersecurity team, source: "10-K Item 1C"}
+  - domain: AEF-LOC-0005
+    impact: medium
+    elements:
+      - {name: "Lean, just-in-time manufacturing", source: "10-K Item 1A"}
+      - {name: Raw-material procurement, source: "10-K Item 1"}
+      - {name: Order-to-cash and inventory, source: "10-K Item 1A"}
+      - {name: New product development, source: "10-K Item 1A"}
+      - {name: Financial reporting (ICFR), source: "10-K Item 1A ERP"}
+  - domain: AEF-LOC-0007
+    impact: high
+    elements:
+      - {name: "Chandler, Arizona HQ and plants", source: "10-K Item 2"}
+      - {name: "Rogers, Connecticut", source: "10-K Item 2"}
+      - {name: "Suzhou, China", source: "10-K Item 2"}
+      - {name: "Eschenbach, Germany", source: "10-K Item 2"}
+      - {name: "Evergem, Belgium", source: "10-K Item 2"}
+      - {name: "Budapest, Hungary; Ansan, Korea; Blackburn, England", source: "10-K Item 2"}
   - {domain: AEF-LOC-0015, impact: high}
-  - {domain: AEF-LOC-0016, impact: high, elements: [ERP (legacy and new)]}
-  - {domain: AEF-LOC-0017, impact: medium}
-  - {domain: AEF-LOC-0018, impact: medium}
-  - {domain: AEF-LOC-0019, impact: high}
-  - {domain: AEF-LOC-0042, impact: medium}
+  - domain: AEF-LOC-0016
+    impact: high
+    elements:
+      - {name: Legacy ERP, source: "10-K Item 1A"}
+      - {name: New ERP (multi-year rollout), source: "10-K Item 1A"}
+      - {name: Order processing and inventory systems, source: "10-K Item 1A"}
+  - domain: AEF-LOC-0017
+    impact: medium
+    elements:
+      - {name: Mobile devices, source: "10-K Item 1A"}
+      - {name: Endpoints, source: "10-K Item 1C"}
+      - {name: Third-party hosted systems, source: "10-K Item 1A"}
+  - domain: AEF-LOC-0018
+    impact: medium
+    elements:
+      - {name: Global site telecommunications, source: "10-K Item 1A"}
+      - {name: Perimeter network protections, source: "10-K Item 1C"}
+  - domain: AEF-LOC-0019
+    impact: high
+    elements:
+      - {name: Financial records and ledgers, source: "10-K Item 1A"}
+      - {name: Confidential design and customer data stores, source: "10-K Item 1A"}
+      - {name: Controlled unclassified information, source: "10-K Item 1C"}
+  - domain: AEF-LOC-0042
+    impact: medium
+    elements:
+      - {name: Internet-based business transactions, source: "10-K Item 1A"}
   - {domain: AEF-LOC-0020, impact: medium}
   - {domain: AEF-LOC-0021, impact: none, confirmed_empty: true}
   - {domain: AEF-LOC-0031, impact: high}
-  - {domain: AEF-LOC-0036, impact: high, elements: ["About 2,800 OEM and component-supplier customers"]}
-  - {domain: AEF-LOC-0037, impact: low}
-  - {domain: AEF-LOC-0038, impact: high, elements: [Sole or limited-source raw material suppliers]}
-  - {domain: AEF-LOC-0026, impact: high, elements: [Actors seeking proprietary technology]}
+  - domain: AEF-LOC-0036
+    impact: high
+    elements:
+      - {name: "~2,800 OEMs and component suppliers", source: "10-K Item 1"}
+      - {name: "Fabricators, converters, and distributors", source: "10-K Item 1"}
+  - domain: AEF-LOC-0037
+    impact: low
+    elements:
+      - {name: Third-party IT service providers, source: "10-K Item 1A"}
+      - {name: ERP implementation consultants, source: "10-K Item 1A"}
+  - domain: AEF-LOC-0038
+    impact: high
+    elements:
+      - {name: "Sole or limited-source raw material suppliers", source: "10-K Item 1A"}
+      - {name: "Copper, PTFE, silicone, ceramic inputs", source: "10-K Item 1"}
+  - domain: AEF-LOC-0026
+    impact: high
+    elements:
+      - {name: Computer hackers, source: "10-K Item 1A"}
+      - {name: Foreign governments, source: "10-K Item 1A"}
+      - {name: Cyber terrorists, source: "10-K Item 1A"}
+      - {name: Disgruntled employees, source: "10-K Item 1A"}
+      - {name: IP infringers and pirates, source: "10-K Item 1A"}
 
 risks:
-  - {id: RSK-01, statement: Theft or disclosure of proprietary formulations erodes competitive advantage, threatens: [VAL-02], domain: AEF-LOC-0003, likelihood: Medium, impact: High, treatment: Mitigate, domas_at_risk: [DOMA-02], needs_security_input: true}
-  - {id: RSK-02, statement: Cyber or system disruption halts order processing and shipping, threatens: [VAL-01], domain: AEF-LOC-0016, likelihood: Medium, impact: High, treatment: Mitigate, domas_at_risk: [DOMA-04], needs_security_input: true}
-  - {id: RSK-03, statement: ERP transition weakens financial record integrity, threatens: [VAL-01], domain: AEF-LOC-0019, likelihood: Medium, impact: Medium, treatment: Mitigate, domas_at_risk: [DOMA-08]}
-  - {id: RSK-04, statement: Sole-source supplier failure or compromise stops production, threatens: [VAL-01], domain: AEF-LOC-0038, likelihood: Needs Validation, impact: High, treatment: Undecided, domas_at_risk: [DOMA-06]}
+  - {id: RSK-01, rank: 1, statement: "Theft or disclosure of formulations and process know-how erodes competitive advantage", threatens: [VAL-02], domain: AEF-LOC-0003, elements: [Trade secrets and process know-how], likelihood: Medium, impact: High, treatment: Mitigate, strategies: [STR-01], needs_security_input: true}
+  - {id: RSK-02, rank: 2, statement: "Cyberattack or failure stops ERP, order processing, and shipping", threatens: [VAL-01], domain: AEF-LOC-0016, elements: [Legacy ERP, Order processing and inventory systems], likelihood: Medium, impact: High, treatment: Mitigate, strategies: [STR-02, STR-03], needs_security_input: true}
+  - {id: RSK-03, rank: 3, statement: "The ERP transition weakens financial reporting controls", threatens: [VAL-01], domain: AEF-LOC-0005, elements: ["Financial reporting (ICFR)"], likelihood: Medium, impact: High, treatment: Mitigate, strategies: [STR-04]}
+  - {id: RSK-04, rank: 4, statement: "Failure or compromise of a sole-source supplier halts production", threatens: [VAL-01], domain: AEF-LOC-0038, elements: [Sole or limited-source raw material suppliers], likelihood: Medium, impact: High, treatment: Mitigate, strategies: [STR-05]}
+  - {id: RSK-05, rank: 5, statement: "A disaster or geopolitical event takes a key plant offline", threatens: [VAL-01], domain: AEF-LOC-0007, elements: ["Suzhou, China", "Eschenbach, Germany"], likelihood: Low, impact: High, treatment: Mitigate, strategies: [STR-06]}
+  - {id: RSK-06, rank: 6, statement: "Export controls or sanctions are breached, restricting access to markets", threatens: [VAL-01], domain: AEF-LOC-0006, elements: ["Circuit materials (RO4000, RT/duroid)"], likelihood: Medium, impact: High, treatment: Mitigate, strategies: [STR-07]}
+  - {id: RSK-07, rank: 7, statement: "A breach of customer design data damages trust and future design wins", threatens: [VAL-01, VAL-02], domain: AEF-LOC-0036, elements: ["~2,800 OEMs and component suppliers"], likelihood: Medium, impact: Medium, treatment: Mitigate, strategies: [STR-01, STR-03]}
+  - {id: RSK-08, rank: 8, statement: "Losing key sales and R&D engineers takes critical know-how with them", threatens: [VAL-02], domain: AEF-LOC-0004, elements: [Sales engineers, R&D and Innovation Center engineers], likelihood: Medium, impact: Medium, treatment: Mitigate, strategies: [STR-08]}
+  - {id: RSK-09, rank: 9, statement: "A third-party IT provider is compromised and used to reach Rogers systems", threatens: [VAL-01], domain: AEF-LOC-0037, elements: [Third-party IT service providers], likelihood: Medium, impact: Medium, treatment: Mitigate, strategies: [STR-05, STR-03]}
+  - {id: RSK-10, rank: 10, statement: "Personal data is processed in breach of GDPR, CCPA, or national privacy laws", threatens: [VAL-01], domain: AEF-LOC-0019, elements: [Confidential design and customer data stores], likelihood: Low, impact: Medium, treatment: Mitigate, strategies: [STR-09]}
+
+strategies:
+  - {id: STR-01, library_ref: STR-IP-PROTECTION, name: Protect proprietary information, statement: "Classify formulations, designs, and customer data, and restrict, monitor, and govern their use.", mitigates: [RSK-01, RSK-07], domains: [AEF-LOC-0003, AEF-LOC-0019, AEF-LOC-0004], attributes: [Confidential, Classified, Access-Controlled, Duty-Segregated, Aware, Governed, Monitored]}
+  - {id: STR-02, library_ref: STR-OPS-CONTINUITY, name: Keep critical operations running, statement: "Sustain ERP, order, and shipping systems through incidents and change.", mitigates: [RSK-02], domains: [AEF-LOC-0016, AEF-LOC-0017, AEF-LOC-0005], attributes: [Available, Recoverable, Change-Managed, Configuration-Managed, Vulnerability-Managed]}
+  - {id: STR-03, library_ref: STR-THREAT-DETECTION, name: Detect and respond to threats, statement: "Monitor for intrusions across systems and third-party connections, and respond fast enough to limit harm.", mitigates: [RSK-02, RSK-07, RSK-09], domains: [AEF-LOC-0015, AEF-LOC-0042], attributes: [Threat-Managed, Monitored, Incident-Managed, Reported]}
+  - {id: STR-04, library_ref: STR-GOVERNED-CHANGE, name: Transform the ERP under control, statement: "Run the ERP program with owned milestones and preserved financial controls.", mitigates: [RSK-03], domains: [AEF-LOC-0016, AEF-LOC-0005, AEF-LOC-0019], attributes: [Change-Managed, Integrity-Assured, Auditable, Duty-Segregated, Owned]}
+  - {id: STR-05, library_ref: STR-THIRD-PARTY-ASSURANCE, name: Assure suppliers and partners, statement: "Vet, contract, and monitor sole-source suppliers and IT providers in proportion to the value they affect.", mitigates: [RSK-04, RSK-09], domains: [AEF-LOC-0038, AEF-LOC-0037], attributes: [Vetted, Monitored, Risk-Managed, Assured, Available]}
+  - {id: STR-06, library_ref: STR-SITE-RESILIENCE, name: Prepare plants for crises, statement: "Plan, exercise, and recover plant operations after disasters and geopolitical disruption.", mitigates: [RSK-05], domains: [AEF-LOC-0007], attributes: [Crisis-Managed, Emergency-Managed, Recoverable, Safe]}
+  - {id: STR-07, library_ref: STR-HARMONIZED-COMPLIANCE, name: Harmonize trade and regulatory obligations, statement: "Map export, sanctions, and securities obligations to one control framework with clear ownership.", mitigates: [RSK-06], domains: [AEF-LOC-0006, AEF-LOC-0001], attributes: [Compliant, Legal, Auditable, Owned, Governed]}
+  - {id: STR-08, library_ref: STR-KNOWLEDGE-RETENTION, name: Retain critical expertise, statement: "Document and share the knowledge of sales and R&D engineers.", mitigates: [RSK-08], domains: [AEF-LOC-0004], attributes: [Documented, Experienced, Resourced]}
+  - {id: STR-09, library_ref: STR-PRIVACY-BY-DESIGN, name: Build privacy into processing, statement: "Collect, use, and retain personal data only as each jurisdiction permits.", mitigates: [RSK-10], domains: [AEF-LOC-0019], attributes: [Confidential, Classified, Compliant, Legal]}
 
 decisions:
   - {id: DEC-01, question: "Does protecting proprietary technology outrank operational availability where the two conflict?", owner: Needs Validation (executive sponsor), status: Open, adr_needed: true, related: [BRO2, BRO3]}

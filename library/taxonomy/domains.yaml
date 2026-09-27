@@ -282,3 +282,85 @@ worksheet_layout:
   - [AEF-LOC-0001]
   - [AEF-LOC-0042]
   - [AEF-LOC-0020]
+
+# ---------------------------------------------------------------------------
+# EXTRACTION GUIDE (used by the BCA agent, Step 5)
+# For each domain: which elements to pull from the inputs, in the
+# organization's own words, and where they usually appear. 10-K locations
+# apply in enterprise mode; intake locations apply in solution mode.
+# Container domains (Enterprise, Business Value, IT, External and Trusted
+# Parties) are populated through their subdomains.
+# ---------------------------------------------------------------------------
+extract_from:
+  AEF-LOC-0040:  # Financial Value
+    look_for: Revenue lines, margins, market positions, growth markets, cost targets, audit or financial exposures
+    tenk: [Item 7 MD&A executive summary, Item 1 segments and markets]
+    intake: [Business case, cost avoidance, audit findings, contract or license end dates]
+  AEF-LOC-0041:  # Social Impact
+    look_for: Safety commitments, environmental obligations, community or workforce commitments
+    tenk: [Item 1 Human Capital, Item 1A environmental and climate risks]
+    intake: [ESG or safety requirements named by the business]
+  AEF-LOC-0006:  # Products
+    look_for: Physical product lines, brands, and trade names
+    tenk: [Item 1 segments and trade names]
+    intake: [Products the solution supports or changes]
+  AEF-LOC-0002:  # Services
+    look_for: Services delivered to customers or employees, including technical support and internal IT services
+    tenk: [Item 1 sales approach and customer support, Item 7 strategy]
+    intake: [The service being built or changed, its tier and SLA]
+  AEF-LOC-0003:  # Information
+    look_for: Categories of information of value - trade secrets, designs, customer data, personal data, financial records
+    tenk: [Item 1 patents and IP, Item 1A IT breach and data protection, Item 1C]
+    intake: [Data classification, information the solution exposes or processes]
+  AEF-LOC-0004:  # People
+    look_for: Workforce groups and roles - engineers, sales, manufacturing, contractors, executives, operations teams
+    tenk: [Item 1 Human Capital, Item 1A key personnel, Executive officers]
+    intake: [User populations and counts, support and operations teams]
+  AEF-LOC-0005:  # Processes
+    look_for: Core business processes - manufacturing, procurement, order-to-cash, R&D, financial reporting, access requests
+    tenk: [Item 1 manufacturing and raw materials, Item 1A IT disruption and ERP, Item 9A]
+    intake: [Workflows the solution changes - joiner/mover/leaver, approvals, support]
+  AEF-LOC-0007:  # Facilities
+    look_for: Sites - headquarters, plants, R&D or innovation centers, warehouses, data centers, by country
+    tenk: [Item 2 Properties, Item 1 segment facilities]
+    intake: [Locations where users, systems, or data reside]
+  AEF-LOC-0016:  # Applications
+    look_for: Named business systems - ERP, order processing, inventory, identity provider, portals
+    tenk: [Item 1A IT disruption and ERP implementation]
+    intake: [Applications in scope, integrations]
+  AEF-LOC-0017:  # Platforms
+    look_for: Devices, servers, cloud tenancies, hosted environments
+    tenk: [Item 1A IT breach (mobile devices, third-party providers), Item 1C]
+    intake: [Endpoint types, managed vs personal devices, cloud services]
+  AEF-LOC-0018:  # Network
+    look_for: Connectivity - site-to-site links, remote access, telecommunications, boundary devices
+    tenk: [Item 1A IT disruption (telecommunication failures), Item 1C network protections]
+    intake: [VPN, brokers, segments, subnets]
+  AEF-LOC-0019:  # Data
+    look_for: Data stores and records - financial records, databases, logs, backups, paper records
+    tenk: [Item 1A IT breach, Item 9A controls]
+    intake: [Where data is stored, logged, retained]
+  AEF-LOC-0042:  # Public Internet
+    look_for: Internet-facing business activity - e-commerce, remote work, customer portals
+    tenk: [Item 1A IT breach (Internet and telecommunications)]
+    intake: [Internet-facing components]
+  AEF-LOC-0036:  # Customers
+    look_for: Customer types, count, concentration, channels
+    tenk: [Item 1 Sales and Competition]
+    intake: [External users or customers affected]
+  AEF-LOC-0037:  # Partners
+    look_for: Outsourced, non-commodity service providers, JVs, consultants, contract firms
+    tenk: [Item 1A IT breach (third-party service providers), Item 1A ERP (consultants)]
+    intake: [Managed service providers, contract firms]
+  AEF-LOC-0038:  # Suppliers
+    look_for: Commodity or sole-source suppliers of materials, technology, and cloud services
+    tenk: [Item 1 raw materials, Item 1A supplier dependence]
+    intake: [Vendors and SaaS providers the solution depends on]
+  AEF-LOC-0026:  # Hostile Entities
+    look_for: Threat actors the organization itself names - hackers, nation states, insiders, IP thieves
+    tenk: [Item 1A IT breach and IP protection]
+    intake: [Threats named in the request or threat intelligence]
+  AEF-LOC-0021:  # Public
+    look_for: General public interactions, if any
+    tenk: []
+    intake: []
