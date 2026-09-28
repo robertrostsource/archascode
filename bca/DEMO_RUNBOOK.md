@@ -2,15 +2,23 @@
 
 > **FICTITIOUS DEMO CONTENT.** NovaCorp, Project WAYFINDER, and all products are invented.
 > **Time:** about 4 minutes. **Story:** type three additions into the model (element, risk, strategy) and watch the guardrails and the page respond.
+> **Local only.** Nothing is pushed to GitHub during the demo.
 
 ---
+
+## The night before (once)
+
+In VS Code, choose **Terminal → New Terminal**, then type:
+
+```
+git pull
+```
 
 ## Before the session
 
 In VS Code, choose **Terminal → New Terminal**, then type:
 
 ```
-git pull
 source .venv/bin/activate
 mkdocs serve
 ```
@@ -97,6 +105,8 @@ Refresh the browser (**Cmd+Shift+R**) and scroll through:
 
 **Say:** "I wrote the model; everything else was generated. The attributes become the NFRs of the Conceptual Architecture."
 
+**Say (instead of pushing live):** "In practice this change goes to a pull request. The pipeline runs this same validator, and on merge the published site updates." Point to the published site tab.
+
 ---
 
 ## Reset for the next run
@@ -122,4 +132,5 @@ git restore bca/engagements/novacorp/wayfinder/model.yaml
 | Page does not change | Check the file is saved, then press **Cmd+Shift+R**. |
 | `command not found` | Run `source .venv/bin/activate`. |
 | Schema or YAML error after typing | Check the indentation against the entries above. |
+| Worksheet diagram shows as text | The diagram needs internet access. Switch to the fallback image. |
 | Anything else on stage | Run the reset command, or switch to the published site and keep talking. |
