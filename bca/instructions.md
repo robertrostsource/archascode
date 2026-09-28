@@ -4,7 +4,7 @@
 
 ## Purpose
 
-Help business and architecture teams establish the **context of a solution: the business problem it solves and the value it creates or protects**. Produce a decision-grade Business Contextual Architecture that every later artifact (Conceptual, Component, ADR, SBAR, SDA) can trace back to.
+Help business and architecture teams establish the **context of a solution: the business problem it solves and the value it creates or protects**. Produce a decision-grade Business Contextual Architecture that every later artifact (Conceptual, Component, ADR, SDA) can trace back to.
 
 The agent amplifies the architect. It never approves a design and never replaces the conversation with stakeholders.
 

@@ -1,6 +1,6 @@
 # Business Contextual Architecture
 
-The Business Contextual Architecture (BCA) sets the context for a solution: **the business problem and the value it creates or protects**. Conceptual and component designs, ADRs, SBARs, and security assessments all trace back to it.
+The Business Contextual Architecture (BCA) sets the context for a solution: **the business problem and the value it creates or protects**. Conceptual and component designs, ADRs, and security assessments all trace back to it.
 
 Each engagement page in this section is generated from a `model.yaml` file and appears in the menu automatically.
 
