@@ -1,7 +1,7 @@
-# Demo Runbook — Architecture as Code: Type Three Additions
+# Demo Runbook — Architecture as Code: Add ITAR and PCI Risks
 
 > **FICTITIOUS DEMO CONTENT.** NovaCorp, Project WAYFINDER, and all products are invented.
-> **Time:** about 4 minutes. **Story:** type three additions into the model (element, risk, strategy) and watch the guardrails and the page respond.
+> **Time:** about 4 minutes. **Story:** type new elements and risks into the model and watch the page respond.
 > **Local only.** Nothing is pushed to GitHub during the demo.
 
 ---
@@ -35,62 +35,41 @@ Open the file `bca/engagements/novacorp/wayfinder/model.yaml`.
 
 ---
 
-## Addition 1: the element
+## Addition 1: two new information elements
 
-Press **Cmd+F** and search for `Contractor firms`. At the end of that line, press **Enter** and type:
+Press **Cmd+F** and search for `Engineering data`. At the end of that line, press **Enter** and type:
 
 ```yaml
-      - Managed SOC provider
+      - ITAR technical data
+      - Cardholder payment data
 ```
 
-(The dash lines up with the dash on the line above.) Save with **Cmd+S**.
+(The dashes line up with the dash on the line above.) Save with **Cmd+S**.
 
-**Say:** "Domains hold the organization's own elements. We just added a partner."
+**Say:** "The Information domain holds what the business must protect. We just added ITAR data and cardholder data."
 
 ---
 
-## Addition 2: the risk
+## Addition 2: two risks to value
 
 Search for `RSK-06`. At the end of that line, press **Enter** and type:
 
 ```yaml
   - id: RSK-07
-    statement: Compromised SOC partner reaches NovaCorp data
+    statement: Loss of US military contracts due to ITAR non-compliance
     threatens: [VAL-02]
-    domain: AEF-LOC-0037
+    domain: AEF-LOC-0003
     treatment: Mitigate
-    strategies: [STR-06]
+  - id: RSK-08
+    statement: Unable to accept credit cards due to PCI DSS non-compliance
+    threatens: [VAL-02]
+    domain: AEF-LOC-0003
+    treatment: Mitigate
 ```
 
-Save with **Cmd+S**. In the second terminal, type:
+Save with **Cmd+S**.
 
-```
-python scripts/validate_bca.py bca/engagements/novacorp/wayfinder/model.yaml
-```
-
-Result: **ERROR RSK-07: unknown strategy STR-06**
-
-**Say:** "A risk without a mitigation strategy doesn't get in."
-
----
-
-## Addition 3: the strategy
-
-Search for `STR-05`. At the end of that line, press **Enter** and type:
-
-```yaml
-  - id: STR-06
-    statement: Vet and monitor the SOC partner
-    mitigates: [RSK-07]
-    domains: [AEF-LOC-0037]
-    attributes: [Vetted, Monitored, Assured]
-```
-
-Save with **Cmd+S**. Run the validator again (press the **Up arrow**, then **Enter**).
-
-Result: **0 errors, 3 warnings**
-
-**Say:** "The three gaps stay. Hold on to them; the next two demos come back to them."
+**Say:** "Risks are framed as value at risk: losing defense revenue, and losing the ability to take payments."
 
 ---
 
@@ -98,14 +77,13 @@ Result: **0 errors, 3 warnings**
 
 Refresh the browser (**Cmd+Shift+R**) and scroll through:
 
-- **4.0 Worksheet:** the Partners box lists *Managed SOC provider*.
-- **5.1 Top Risks:** RSK-07.
-- **5.2 Strategies:** STR-06 with *Vetted, Monitored, Assured*.
-- **5.3 Attributes by Domain:** Partners now shows those attributes. Nobody typed them there.
+- **4.0 Worksheet:** the Information box lists *ITAR technical data* and *Cardholder payment data*.
+- **5.1 Top Risks:** RSK-07 and RSK-08, located in Information.
+- **Top of the page:** an "Incomplete" note says a risk has no mitigation strategy.
 
-**Say:** "I wrote the model; everything else was generated. The attributes become the NFRs of the Conceptual Architecture."
+**Say:** "I wrote the model; everything else was generated. And the model tells us what comes next: each new risk needs a mitigation strategy, whose attributes become the NFRs of the Conceptual Architecture."
 
-**Say (instead of pushing live):** "In practice this change goes to a pull request. The pipeline runs this same validator, and on merge the published site updates." Point to the published site tab.
+**Say (instead of pushing live):** "In practice this change goes to a pull request, and on merge the published site updates." Point to the published site tab.
 
 ---
 
@@ -121,7 +99,7 @@ git restore bca/engagements/novacorp/wayfinder/model.yaml
 
 ## Typing rules
 
-- Indent with **spaces**, never Tab. Addition 1 starts with 6 spaces; Additions 2 and 3 start with 2 spaces before the dash and 4 spaces on the lines below it.
+- Indent with **spaces**, never Tab. Addition 1 lines start with 6 spaces. In Addition 2, each `- id:` line starts with 2 spaces, and the lines below it start with 4.
 - A red squiggle in VS Code means the indentation is off. Line it up with the entries above it.
 
 ## If something goes wrong
@@ -131,6 +109,6 @@ git restore bca/engagements/novacorp/wayfinder/model.yaml
 | Page shows "404" or is blank | Use the full address, including `/archascode/`. |
 | Page does not change | Check the file is saved, then press **Cmd+Shift+R**. |
 | `command not found` | Run `source .venv/bin/activate`. |
-| Schema or YAML error after typing | Check the indentation against the entries above. |
+| Page stops updating after typing | Usually indentation. Line your text up with the entries above, save, and refresh. |
 | Worksheet diagram shows as text | The diagram needs internet access. Switch to the fallback image. |
 | Anything else on stage | Run the reset command, or switch to the published site and keep talking. |
